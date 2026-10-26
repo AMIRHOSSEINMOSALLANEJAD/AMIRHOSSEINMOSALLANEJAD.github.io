@@ -1519,6 +1519,7 @@ ul,ol{list-style:none;padding:0}
 
   var DESKTOP_SRC = 'scene.mp4';
   var MOBILE_SRC = 'scene-mobile.mp4';
+  var AMBIENT_SRC = 'scene-mobile-loop.mp4';
   var DURATION_FALLBACK = 4.966667;
   var FRAME = 1 / 1000;
   var END_GUARD = 1 / 48;
@@ -1527,7 +1528,7 @@ ul,ol{list-style:none;padding:0}
   var recMode = /(?:^|[?&])rec=1(?:&|$)/.test(window.location.search);
   var mq = window.matchMedia('(max-width: 900px)');
   var ambientMode = mq.matches && !recMode;
-  var currentSrc = mq.matches ? MOBILE_SRC : DESKTOP_SRC;
+  var currentSrc = mq.matches ? (ambientMode ? AMBIENT_SRC : MOBILE_SRC) : DESKTOP_SRC;
   var progress = 0;
   var current = 0;
   var activeStep = 1;
@@ -1536,7 +1537,7 @@ ul,ol{list-style:none;padding:0}
 
   /* ---------- video source ---------- */
   function onSourceSwitch(e) {
-    var next = e.matches ? MOBILE_SRC : DESKTOP_SRC;
+    var next = e.matches ? (recMode ? MOBILE_SRC : AMBIENT_SRC) : DESKTOP_SRC;
     if (next === currentSrc) return;
     currentSrc = next;
     preloadSceneVideo();
@@ -1592,14 +1593,18 @@ ul,ol{list-style:none;padding:0}
 
   video.addEventListener('ended', function () {
     if (!ambientMode) return;
-    pauseAmbient();
+    try { video.currentTime = 0; } catch (err) {}
+    playAmbient();
   });
 
   video.addEventListener('pause', function () {
     if (!ambientMode || reduced || !ambient.visible) return;
     if (document.visibilityState === 'hidden') return;
     window.setTimeout(function () {
-      if (!video.paused || video.ended) return;
+      if (!video.paused) return;
+      if (video.ended) {
+        try { video.currentTime = 0; } catch (err) {}
+      }
       if (!ambientMode || reduced || !ambient.visible) return;
       if (document.visibilityState === 'hidden') return;
       playAmbient();
@@ -1623,7 +1628,9 @@ ul,ol{list-style:none;padding:0}
   }
   function playAmbient() {
     if (!ambientMode || reduced || !ambient.visible || !video.paused) return;
-    if (video.ended) return;
+    if (video.ended) {
+      try { video.currentTime = 0; } catch (err) {}
+    }
     var attempt = video.play();
     if (attempt && attempt.catch) attempt.catch(function () {});
   }
@@ -1639,7 +1646,7 @@ ul,ol{list-style:none;padding:0}
       if (blobAbort) { try { blobAbort.abort(); } catch (err) {} blobAbort = null; }
       loadToken++;
       if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (err) {} blobUrl = null; }
-      video.loop = false;
+      video.loop = true;
       video.autoplay = !reduced;
       video.muted = true;
       startStreamingVideo();
