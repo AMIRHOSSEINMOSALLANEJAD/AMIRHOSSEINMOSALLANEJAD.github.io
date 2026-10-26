@@ -178,10 +178,11 @@ ul,ol{list-style:none;padding:0}
 .nav-cta-short{display:none}
 
 /* ---------- hero ---------- */
-.hero-track{position:relative;z-index:1;height:420vh;background:var(--night)}
+.hero-track{position:relative;z-index:1;height:420vh;height:420lvh;background:var(--night)}
 .scene{
   position:sticky;top:0;
   height:100vh;
+  height:100lvh;
   overflow:hidden;
   background:var(--night);
   isolation:isolate;
@@ -917,6 +918,8 @@ ul,ol{list-style:none;padding:0}
 }
 
 @media (max-width:900px){
+  .scene-video{filter:none}
+  .stage{perspective:none}
   .section-head,.about-grid{grid-template-columns:minmax(0,1fr);gap:calc(var(--u) * 26)}
   .section-head .section-label,.about .section-label{padding-top:0}
   .projects{margin-top:calc(var(--u) * 70)}
@@ -1390,6 +1393,7 @@ ul,ol{list-style:none;padding:0}
 
   var recMode = /(?:^|[?&])rec=1(?:&|$)/.test(window.location.search);
   var mq = window.matchMedia('(max-width: 900px)');
+  var ambientMode = mq.matches && !recMode;
   var currentSrc = mq.matches ? MOBILE_SRC : DESKTOP_SRC;
   var progress = 0;
   var current = 0;
@@ -1440,9 +1444,23 @@ ul,ol{list-style:none;padding:0}
     scrubReady = true;
     video.classList.add('is-ready');
     hideLoader(150);
+    if (ambientMode) {
+      if (!reduced) playAmbient();
+      return;
+    }
     if (video.readyState >= 1) {
       try { video.currentTime = Math.min(current, duration() - END_GUARD); } catch (err) {}
     }
+  });
+
+  video.addEventListener('error', function () {
+    if (blobUrl && video.currentSrc === blobUrl) startStreamingVideo();
+  });
+
+  video.addEventListener('ended', function () {
+    if (!ambientMode) return;
+    try { video.currentTime = 0; } catch (err) {}
+    playAmbient();
   });
 
   var POSTER = video.getAttribute('poster');
@@ -1455,13 +1473,36 @@ ul,ol{list-style:none;padding:0}
   var blobUrl = null;
   var blobAbort = null;
   var loadToken = 0;
+  var ambient = { visible: true };
   function startStreamingVideo() {
     video.src = currentSrc;
     video.load();
   }
+  function playAmbient() {
+    if (!ambientMode || reduced || !ambient.visible || !video.paused) return;
+    var attempt = video.play();
+    if (attempt && attempt.catch) attempt.catch(function () {});
+  }
+  function pauseAmbient() {
+    if (!ambientMode) return;
+    try { video.pause(); } catch (err) {}
+  }
   function preloadSceneVideo() {
+    ambientMode = mq.matches && !recMode;
     scrubReady = false;
     video.classList.remove('is-ready');
+    if (ambientMode) {
+      if (blobAbort) { try { blobAbort.abort(); } catch (err) {} blobAbort = null; }
+      loadToken++;
+      if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (err) {} blobUrl = null; }
+      video.loop = false;
+      video.autoplay = !reduced;
+      video.muted = true;
+      startStreamingVideo();
+      return;
+    }
+    video.loop = false;
+    video.autoplay = false;
     if (!window.fetch || !window.URL || !URL.createObjectURL) { startStreamingVideo(); return; }
     if (blobAbort) { try { blobAbort.abort(); } catch (err) {} }
     var token = ++loadToken;
@@ -1498,13 +1539,49 @@ ul,ol{list-style:none;padding:0}
 
   preloadSceneVideo();
 
+  /* ---------- ambient playback (narrow viewports) ---------- */
+  if ('IntersectionObserver' in window) {
+    var ambientIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        ambient.visible = entry.isIntersecting;
+        if (!ambientMode) return;
+        if (ambient.visible) playAmbient();
+        else pauseAmbient();
+      });
+    }, { threshold: 0.01 });
+    ambientIO.observe(scene);
+  }
+  function nudgeAmbient() {
+    if (!ambientMode) return;
+    if (ambient.visible) playAmbient();
+  }
+  window.addEventListener('touchstart', nudgeAmbient, { passive: true });
+  window.addEventListener('pointerdown', nudgeAmbient, { passive: true });
+
   /* ---------- scroll-driven scene ---------- */
   function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+  var cachedSpan = 0;
+  var spanW = 0;
+  var spanH = 0;
+  function measureSceneSpan(force) {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    if (force || !cachedSpan || Math.abs(w - spanW) > 2 || Math.abs(h - spanH) > 180) {
+      var next = hero.offsetHeight - scene.offsetHeight;
+      if (next > 0) cachedSpan = next;
+      spanW = w;
+      spanH = h;
+    }
+    return cachedSpan || 1;
+  }
+  function sceneSpan() { return cachedSpan || measureSceneSpan(true); }
+  window.addEventListener('resize', function () { measureSceneSpan(false); }, { passive: true });
 
   function scrollProgress() {
     var rect = hero.getBoundingClientRect();
     var top = rect.top + window.pageYOffset;
-    var distance = hero.offsetHeight - window.innerHeight;
+    var distance = sceneSpan();
     if (distance <= 0) return 0;
     return clamp((window.pageYOffset - top) / distance, 0, 1);
   }
@@ -1516,6 +1593,7 @@ ul,ol{list-style:none;padding:0}
   var lastSeekAt = 0;
   var scrubReady = false;
   function requestSeek(time) {
+    if (ambientMode) return;
     if (!video || !scrubReady || video.readyState < 1 || video.seeking) return;
     var safe = clamp(time, 0, Math.max(0, duration() - END_GUARD));
     if (Math.abs(video.currentTime - safe) <= FRAME) return;
@@ -1526,7 +1604,7 @@ ul,ol{list-style:none;padding:0}
   }
 
   video.addEventListener('seeked', function () {
-    if (video.seeking) return;
+    if (ambientMode || video.seeking) return;
     if (Math.abs(video.currentTime - current) > FRAME) requestSeek(current);
   });
 
@@ -1545,7 +1623,11 @@ ul,ol{list-style:none;padding:0}
     var h = easeInOutQuad(clamp(p / 0.38, 0, 1));
     var copyOpacity = 1 - clamp((p - 0.10) / 0.14, 0, 1);
 
-    heroCopy.style.transform = 'translate3d(0,' + (-34 * h).toFixed(3) + 'vh,0) rotateX(' + (62 * h).toFixed(3) + 'deg) scale(' + (1 - 0.12 * h).toFixed(4) + ')';
+    if (mq.matches) {
+      heroCopy.style.transform = 'translate3d(0,' + (-22 * h).toFixed(3) + 'vh,0) scale(' + (1 - 0.08 * h).toFixed(4) + ')';
+    } else {
+      heroCopy.style.transform = 'translate3d(0,' + (-34 * h).toFixed(3) + 'vh,0) rotateX(' + (62 * h).toFixed(3) + 'deg) scale(' + (1 - 0.12 * h).toFixed(4) + ')';
+    }
     heroCopy.style.opacity = copyOpacity.toFixed(3);
     heroCopy.style.pointerEvents = copyOpacity < 0.05 ? 'none' : 'auto';
 
@@ -1635,7 +1717,7 @@ ul,ol{list-style:none;padding:0}
 
     var rect = hero.getBoundingClientRect();
     var top = rect.top + window.pageYOffset;
-    var distance = Math.max(1, hero.offsetHeight - window.innerHeight);
+    var distance = Math.max(1, sceneSpan());
     window.scrollTo(0, top + p * distance);
     current = p * denom;
     renderUI(p);
@@ -1646,26 +1728,43 @@ ul,ol{list-style:none;padding:0}
   };
 
   /* ---------- main loop ---------- */
+  var lastP = -1;
+  var idleFrames = 0;
+  var rafId = 0;
   function loop() {
+    rafId = 0;
     var p;
     if (recMode) {
       p = recPaused ? recP : readRecProgress();
     } else {
       p = scrollProgress();
     }
-    progress = p;
 
-    var target = p * Math.max(0, duration() - END_GUARD);
-    current = target;
-    current = clamp(current, 0, Math.max(0, duration() - END_GUARD));
+    if (recMode || Math.abs(p - lastP) > 0.00002) {
+      lastP = p;
+      progress = p;
+      if (!ambientMode) {
+        var target = p * Math.max(0, duration() - END_GUARD);
+        current = target;
+        current = clamp(current, 0, Math.max(0, duration() - END_GUARD));
+        requestSeek(current);
+      }
+      renderUI(p);
+      idleFrames = 0;
+    } else {
+      idleFrames++;
+    }
 
-    requestSeek(current);
-    renderUI(p);
-    window.requestAnimationFrame(loop);
+    if (recMode || idleFrames < 12) rafId = window.requestAnimationFrame(loop);
   }
+  function kickScene() {
+    if (!rafId) rafId = window.requestAnimationFrame(loop);
+  }
+  window.addEventListener('scroll', kickScene, { passive: true });
+  window.addEventListener('resize', kickScene, { passive: true });
 
-  renderUI(recMode ? 0 : scrollProgress());
-  window.requestAnimationFrame(loop);
+  lastP = -1;
+  kickScene();
 
   /* ---------- copy email ---------- */
   function fallbackCopy(text) {
