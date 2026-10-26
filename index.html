@@ -499,16 +499,13 @@ ul,ol{list-style:none;padding:0}
 
 /* ---------- content shell ---------- */
 .content{position:relative;z-index:4;background:var(--night)}
-.content-top{border-top:1px solid var(--line)}
 .wrap{
   width:min(calc(100% - var(--pad) * 2),calc(var(--u) * 1252));
   margin-inline:auto;
 }
 .ticker{
   overflow:hidden;
-  border-bottom:1px solid var(--line);
   padding-block:calc(var(--u) * 17);
-  background:linear-gradient(90deg,rgba(198,255,46,.03),transparent 28%,transparent 72%,rgba(63,216,255,.035));
 }
 .ticker-track{
   display:flex;width:max-content;
@@ -582,7 +579,6 @@ ul,ol{list-style:none;padding:0}
 }
 .projects{
   margin-top:calc(var(--u) * 92);
-  border-top:1px solid var(--line);
 }
 .project{
   --accent:var(--lime);
@@ -828,8 +824,7 @@ ul,ol{list-style:none;padding:0}
   text-transform:uppercase;
   color:var(--ink-46);
 }
-.studies-label::after{content:"";flex:1;height:1px;background:var(--line)}
-.projects.projects-studies{margin-top:calc(var(--u) * 26);border-top:1px solid var(--line)}
+.projects.projects-studies{margin-top:calc(var(--u) * 26)}
 
 /* ---------- about ---------- */
 .about{border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.012),transparent 30%)}
@@ -1312,7 +1307,7 @@ ul,ol{list-style:none;padding:0}
     </div>
   </section>
 
-  <div class="content content-top" id="content">
+  <div class="content" id="content">
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track">
         <div class="ticker-group">
