@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ASI — a personal AI assistant, early build</title>
+<meta name="description" content="ASI is a personal AI assistant app in early development: one place to ask, plan and get work done, with a human keeping the final call." />
+<meta name="author" content="Amirhossein Mosallanejad" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://amirhosseinmosallanejad.github.io/asi.html" />
+<link rel="me" href="https://github.com/AMIRHOSSEINMOSALLANEJAD" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0f1626" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Amirhossein Mosallanejad" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://amirhosseinmosallanejad.github.io/asi.html" />
+<meta property="og:title" content="ASI — a personal assistant that asks first" />
+<meta property="og:description" content="A personal AI assistant app in early development: one place to ask, plan and get work done." />
+<meta property="og:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<meta property="og:image:alt" content="An isometric night scene with a glowing blue building and cooling towers." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ASI — a personal assistant that asks first" />
+<meta name="twitter:description" content="A personal AI assistant app in early development." />
+<meta name="twitter:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "ASI",
+  "url": "https://amirhosseinmosallanejad.github.io/asi.html",
+  "description": "A personal AI assistant app in early development, built around a human approval step.",
+  "creator": {
+    "@type": "Person",
+    "name": "Amirhossein Mosallanejad",
+    "url": "https://amirhosseinmosallanejad.github.io/"
+  },
+  "keywords": "personal AI assistant, agent, human-in-the-loop",
+  "isAccessibleForFree": true
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1626'/%3E%3Cpath d='M18 46 31 17h3l13 29h-7l-3-8H27l-3 8z' fill='%23c6ff2e'/%3E%3C/svg%3E" />
+<link rel="preload" href="inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="case case-cyan">
+
+<a class="skip" href="#main">Skip to case study</a>
+
+<header class="topbar">
+  <a class="wordmark" href="index.html" aria-label="Amirhossein — back to portfolio">Amirhossein<span>.</span></a>
+  <nav class="topnav" aria-label="Case navigation">
+    <a href="index.html#work">Selected work</a>
+    <a href="index.html#about">About</a>
+    <a class="topcta" href="mailto:mosalanejadamirhossein@gmail.com?subject=ASI%20question">Ask about ASI <span class="arr" aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="case-hero" aria-labelledby="case-title">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index.html">Index</a><span aria-hidden="true">/</span>
+        <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
+        <b>Build 04</b>
+      </nav>
+      <p class="kicker"><i aria-hidden="true"></i>Early build — personal assistant</p>
+      <h1 id="case-title">ASI</h1>
+      <p class="standfirst">A personal AI assistant app I'm building for myself: one place to ask, plan and get work done, with <strong>the final call staying with me.</strong></p>
+      <ul class="hero-meta" aria-label="Project facts">
+        <li><span>Role</span><b>Design &amp; build</b></li>
+        <li><span>Scope</span><b>Personal app</b></li>
+        <li><span>Status</span><b>Early build</b></li>
+        <li><span>Audience</span><b>Myself, for now</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="why-title">
+    <div class="wrap split">
+      <p class="label"><span>01</span>Why</p>
+      <div>
+        <h2 id="why-title">The work is scattered. <em>The context goes with it.</em></h2>
+        <div class="prose">
+          <p>Notes in one app, tasks in another, half-finished thinking spread across chat windows. Every tool is useful on its own and none of them knows what the others are doing.</p>
+          <p>ASI is my answer to that: a single assistant I open when I want to think something through, plan it, and then actually move — instead of re-explaining the situation to a new window every time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="aims-title">
+    <div class="wrap">
+      <p class="label"><span>02</span>What it aims to be</p>
+      <h2 id="aims-title" class="band-title">One front door. <em>A stop button that stays mine.</em></h2>
+      <div class="cards">
+        <div class="card">
+          <span class="cnum">A</span>
+          <h3>One front door</h3>
+          <p>A single place to ask and pick up where I left off, rather than a tab per task and a memory that resets each time.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">B</span>
+          <h3>Plans before actions</h3>
+          <p>The assistant says what it intends to do before doing it, so a wrong assumption shows up as a sentence I can correct — not as a finished result I have to undo.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">C</span>
+          <h3>The human keeps the call</h3>
+          <p>The same rule as the rest of my work: the agent proposes, I approve. Anything irreversible waits for an explicit yes from me.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="now-title">
+    <div class="wrap split">
+      <p class="label"><span>03</span>Where it is now</p>
+      <div>
+        <h2 id="now-title">Early, and growing in the open.</h2>
+        <div class="prose">
+          <p>This is a first version, not a finished product. There is no public release yet and no download link — when there is, it will appear here first.</p>
+          <p class="muted-note">This page is intentionally short. I would rather describe what the app does once it does it, than promise a feature list it has not earned.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <h2 id="cta-title">Curious where it's going? <em>Ask me.</em></h2>
+      <p>If you are building a personal assistant of your own, I am happy to compare notes on approval flows and where the guardrails belong.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:mosalanejadamirhossein@gmail.com?subject=ASI">Email me about ASI <span aria-hidden="true">↗</span></a>
+        <a class="btn-ghost" href="index.html#work">Back to selected work</a>
+      </div>
+    </div>
+  </section>
+
+  <a class="next wrap" href="replymate.html" aria-label="Next: ReplyMate">
+    <span>
+      <span class="nlabel">Case — 01</span>
+      <span class="ntitle">ReplyMate</span>
+    </span>
+    <span class="narr" aria-hidden="true">↗</span>
+  </a>
+
+  <footer class="footer wrap">
+    <span>© 2026 Amirhossein Mosallanejad</span>
+    <span>Yerevan, Armenia</span>
+    <span class="lime">Own build</span>
+    <a href="index.html">Back to index <span aria-hidden="true">↑</span></a>
+  </footer>
+
+</main>
+</body>
+</html>

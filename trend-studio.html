@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trend Studio — a YouTube trend desk that runs on the phone</title>
+<meta name="description" content="Trend Studio finds rising YouTube topics and drafts content ideas with Gemini, running entirely on an Android phone." />
+<meta name="author" content="Amirhossein Mosallanejad" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://amirhosseinmosallanejad.github.io/trend-studio.html" />
+<link rel="me" href="https://github.com/AMIRHOSSEINMOSALLANEJAD" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0f1626" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Amirhossein Mosallanejad" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://amirhosseinmosallanejad.github.io/trend-studio.html" />
+<meta property="og:title" content="Trend Studio — trends first, ideas second" />
+<meta property="og:description" content="A YouTube trend finder and content-idea writer that runs entirely on the phone." />
+<meta property="og:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<meta property="og:image:alt" content="An isometric night scene with a glowing blue building and cooling towers." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Trend Studio — trends first, ideas second" />
+<meta name="twitter:description" content="A YouTube trend finder and content-idea writer that runs entirely on the phone." />
+<meta name="twitter:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Trend Studio",
+  "url": "https://amirhosseinmosallanejad.github.io/trend-studio.html",
+  "description": "A YouTube trend finder and content-idea writer for Android, running its Python core on the device.",
+  "creator": {
+    "@type": "Person",
+    "name": "Amirhossein Mosallanejad",
+    "url": "https://amirhosseinmosallanejad.github.io/"
+  },
+  "keywords": "YouTube trends, content ideas, Gemini, Android, Kotlin, Chaquopy",
+  "isAccessibleForFree": true
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1626'/%3E%3Cpath d='M18 46 31 17h3l13 29h-7l-3-8H27l-3 8z' fill='%23c6ff2e'/%3E%3C/svg%3E" />
+<link rel="preload" href="inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="case case-lime">
+
+<a class="skip" href="#main">Skip to case study</a>
+
+<header class="topbar">
+  <a class="wordmark" href="index.html" aria-label="Amirhossein — back to portfolio">Amirhossein<span>.</span></a>
+  <nav class="topnav" aria-label="Case navigation">
+    <a href="index.html#work">Selected work</a>
+    <a href="index.html#about">About</a>
+    <a class="topcta" href="mailto:mosalanejadamirhossein@gmail.com?subject=Trend%20Studio%20walkthrough">Request walkthrough <span class="arr" aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="case-hero" aria-labelledby="case-title">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index.html">Index</a><span aria-hidden="true">/</span>
+        <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
+        <b>Build 03</b>
+      </nav>
+      <p class="kicker"><i aria-hidden="true"></i>Own build — content tooling</p>
+      <h1 id="case-title">Trend Studio</h1>
+      <p class="standfirst">A YouTube trend finder and content-idea writer that runs entirely on the phone. It reads what is rising, ranks it, and hands the strongest topic to Gemini for <strong>angles worth filming.</strong></p>
+      <ul class="hero-meta" aria-label="Project facts">
+        <li><span>Role</span><b>Design &amp; build</b></li>
+        <li><span>Scope</span><b>Android app + Python core</b></li>
+        <li><span>Status</span><b>Early build</b></li>
+        <li><span>Stack</span><b>Kotlin · Compose · Chaquopy</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="problem-title">
+    <div class="wrap split">
+      <p class="label"><span>01</span>The problem</p>
+      <div>
+        <h2 id="problem-title">Ideas are cheap. <em>Evidence is not.</em></h2>
+        <div class="prose">
+          <p>Most content ideas start from a hunch and get checked afterwards, if at all. Trend data exists, but it arrives as a list of titles with no sense of which one is worth the next four hours of filming.</p>
+          <p>The tool I wanted was narrow: show me what is actually rising, rank it before I look, and turn the winner into a few concrete angles — on the phone, without opening a dashboard on a laptop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="does-title">
+    <div class="wrap">
+      <p class="label"><span>02</span>What it does</p>
+      <h2 id="does-title" class="band-title">Four steps, one screen. <em>No dashboard.</em></h2>
+      <div class="cards">
+        <div class="card">
+          <span class="cnum">A</span>
+          <h3>Find what is rising</h3>
+          <p>Trending topics come in through the YouTube Data API and are normalised into a single readable list, so the noise of raw results never reaches the screen.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">B</span>
+          <h3>Rank before reading</h3>
+          <p>A scoring pass orders the candidates, so the list arrives sorted by strength instead of by whatever the API returned first.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">C</span>
+          <h3>Draft the angles</h3>
+          <p>The chosen topic goes to Gemini, which returns content ideas — the framing and the hook, not just another title to stare at.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">D</span>
+          <h3>Keep it on the phone</h3>
+          <p>Topics, ideas, shared links and settings persist in a local SQLite store. Nothing is sent to a backend I have to run.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="runs-title">
+    <div class="wrap split">
+      <p class="label"><span>03</span>How it runs</p>
+      <div>
+        <h2 id="runs-title">Python in your pocket. <em>Keys that never leave it.</em></h2>
+        <div class="prose">
+          <p>The interface is Kotlin and Compose. The Python core — trends, scoring, idea writing, storage — runs on the device through Chaquopy, which means the app needs no server and works without a laptop nearby.</p>
+          <p>Both API keys (YouTube Data API and Gemini) are entered in the app and written to its private folder on the phone. They are never stored in the repository, so the source can be shared or archived without carrying credentials with it.</p>
+        </div>
+        <ul class="tags" aria-label="Stack">
+          <li>Kotlin</li><li>Jetpack Compose</li><li>Chaquopy</li><li>Python</li><li>YouTube Data API</li><li>Gemini</li><li>SQLite</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="status-title">
+    <div class="wrap split">
+      <p class="label"><span>04</span>Status</p>
+      <div>
+        <h2 id="status-title">Early, and heading into ReplyMate.</h2>
+        <div class="prose">
+          <p>Trend Studio started as a standalone Android app and now doubles as a surface inside ReplyMate, where trend selection sits next to the inbox work. The Python package is shared between the two rather than forked.</p>
+          <p class="muted-note">Private repository. This page describes the pipeline; a walkthrough covers the app and the ranked output.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <h2 id="cta-title">See a ranked trend list <em>turn into ideas.</em></h2>
+      <p>I can walk you through the scoring pass, the prompt behind the idea writer, and how the app keeps its keys on the device.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:mosalanejadamirhossein@gmail.com?subject=Trend%20Studio%20walkthrough">Request a walkthrough <span aria-hidden="true">↗</span></a>
+        <a class="btn-ghost" href="index.html#work">Back to selected work</a>
+      </div>
+    </div>
+  </section>
+
+  <a class="next wrap" href="asi.html" aria-label="Next build: ASI">
+    <span>
+      <span class="nlabel">Next build — 04</span>
+      <span class="ntitle">ASI</span>
+    </span>
+    <span class="narr" aria-hidden="true">↗</span>
+  </a>
+
+  <footer class="footer wrap">
+    <span>© 2026 Amirhossein Mosallanejad</span>
+    <span>Yerevan, Armenia</span>
+    <span class="lime">Own build</span>
+    <a href="index.html">Back to index <span aria-hidden="true">↑</span></a>
+  </footer>
+
+</main>
+</body>
+</html>
