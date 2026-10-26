@@ -920,6 +920,18 @@ ul,ol{list-style:none;padding:0}
 @media (max-width:900px){
   .scene-video{filter:none}
   .stage{perspective:none}
+  .nav.is-scrolled{
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    background:rgba(15,22,38,.88);
+    transition:background .45s ease, border-color .45s ease;
+  }
+  .pill-mail{
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    background:rgba(15,22,38,.5);
+  }
+  .hero-title{text-shadow:none}
   .section-head,.about-grid{grid-template-columns:minmax(0,1fr);gap:calc(var(--u) * 26)}
   .section-head .section-label,.about .section-label{padding-top:0}
   .projects{margin-top:calc(var(--u) * 70)}
@@ -1463,6 +1475,17 @@ ul,ol{list-style:none;padding:0}
     playAmbient();
   });
 
+  video.addEventListener('pause', function () {
+    if (!ambientMode || reduced || !ambient.visible) return;
+    if (document.visibilityState === 'hidden') return;
+    window.setTimeout(function () {
+      if (!video.paused) return;
+      if (!ambientMode || reduced || !ambient.visible) return;
+      if (document.visibilityState === 'hidden') return;
+      playAmbient();
+    }, 30);
+  });
+
   var POSTER = video.getAttribute('poster');
   if (POSTER) {
     scene.style.backgroundImage = 'url("' + POSTER + '")';
@@ -1495,7 +1518,7 @@ ul,ol{list-style:none;padding:0}
       if (blobAbort) { try { blobAbort.abort(); } catch (err) {} blobAbort = null; }
       loadToken++;
       if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (err) {} blobUrl = null; }
-      video.loop = false;
+      video.loop = true;
       video.autoplay = !reduced;
       video.muted = true;
       startStreamingVideo();
@@ -1562,14 +1585,19 @@ ul,ol{list-style:none;padding:0}
   function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
   var cachedSpan = 0;
+  var heroTop = 0;
+  var sceneHeight = 0;
   var spanW = 0;
   var spanH = 0;
   function measureSceneSpan(force) {
     var w = window.innerWidth;
     var h = window.innerHeight;
     if (force || !cachedSpan || Math.abs(w - spanW) > 2 || Math.abs(h - spanH) > 180) {
+      var rect = hero.getBoundingClientRect();
+      heroTop = rect.top + window.pageYOffset;
       var next = hero.offsetHeight - scene.offsetHeight;
       if (next > 0) cachedSpan = next;
+      sceneHeight = scene.offsetHeight;
       spanW = w;
       spanH = h;
     }
@@ -1578,12 +1606,10 @@ ul,ol{list-style:none;padding:0}
   function sceneSpan() { return cachedSpan || measureSceneSpan(true); }
   window.addEventListener('resize', function () { measureSceneSpan(false); }, { passive: true });
 
-  function scrollProgress() {
-    var rect = hero.getBoundingClientRect();
-    var top = rect.top + window.pageYOffset;
+  function scrollProgress(y) {
     var distance = sceneSpan();
     if (distance <= 0) return 0;
-    return clamp((window.pageYOffset - top) / distance, 0, 1);
+    return clamp((y - heroTop) / distance, 0, 1);
   }
 
   function easeInOutQuad(t) {
@@ -1619,7 +1645,9 @@ ul,ol{list-style:none;padding:0}
     });
   }
 
-  function renderUI(p) {
+  var pointerState = '';
+  function renderUI(p, y) {
+    if (typeof y !== 'number') y = window.pageYOffset;
     var h = easeInOutQuad(clamp(p / 0.38, 0, 1));
     var copyOpacity = 1 - clamp((p - 0.10) / 0.14, 0, 1);
 
@@ -1629,12 +1657,17 @@ ul,ol{list-style:none;padding:0}
       heroCopy.style.transform = 'translate3d(0,' + (-34 * h).toFixed(3) + 'vh,0) rotateX(' + (62 * h).toFixed(3) + 'deg) scale(' + (1 - 0.12 * h).toFixed(4) + ')';
     }
     heroCopy.style.opacity = copyOpacity.toFixed(3);
-    heroCopy.style.pointerEvents = copyOpacity < 0.05 ? 'none' : 'auto';
+    var wantPointer = copyOpacity < 0.05 ? 'none' : 'auto';
+    if (wantPointer !== pointerState) {
+      pointerState = wantPointer;
+      heroCopy.style.pointerEvents = wantPointer;
+    }
 
     var listIn = clamp((p - 0.08) / 0.16, 0, 1);
-    var sceneRect = scene.getBoundingClientRect();
-    var exit = clamp(-sceneRect.top / (sceneRect.height * 0.55), 0, 1);
-    var listExit = clamp(-sceneRect.top / (sceneRect.height * 0.22), 0, 1);
+    var past = Math.max(0, y - (heroTop + sceneSpan()));
+    var sh = sceneHeight || 1;
+    var exit = clamp(past / (sh * 0.55), 0, 1);
+    var listExit = clamp(past / (sh * 0.22), 0, 1);
     sceneVeil.style.opacity = exit.toFixed(3);
     worklist.style.opacity = (listIn * (1 - listExit)).toFixed(3);
     worklist.style.transform = 'translate3d(0,' + (40 * (1 - listIn)).toFixed(2) + 'px,0)';
@@ -1729,19 +1762,25 @@ ul,ol{list-style:none;padding:0}
 
   /* ---------- main loop ---------- */
   var lastP = -1;
+  var lastPast = -1;
   var idleFrames = 0;
   var rafId = 0;
   function loop() {
     rafId = 0;
+    var y = window.pageYOffset;
     var p;
     if (recMode) {
       p = recPaused ? recP : readRecProgress();
     } else {
-      p = scrollProgress();
+      p = scrollProgress(y);
     }
+    var span = sceneSpan();
+    var past = Math.max(0, y - (heroTop + span));
+    var pastKey = Math.min(past, sceneHeight || 1);
 
-    if (recMode || Math.abs(p - lastP) > 0.00002) {
+    if (recMode || Math.abs(p - lastP) > 0.00002 || pastKey !== lastPast) {
       lastP = p;
+      lastPast = pastKey;
       progress = p;
       if (!ambientMode) {
         var target = p * Math.max(0, duration() - END_GUARD);
@@ -1749,7 +1788,7 @@ ul,ol{list-style:none;padding:0}
         current = clamp(current, 0, Math.max(0, duration() - END_GUARD));
         requestSeek(current);
       }
-      renderUI(p);
+      renderUI(p, y);
       idleFrames = 0;
     } else {
       idleFrames++;
