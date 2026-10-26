@@ -195,6 +195,19 @@ ul,ol{list-style:none;padding:0}
   transform:translateZ(0);
   filter:saturate(1.04) contrast(1.02);
 }
+.scene-still{
+  position:absolute;inset:0;z-index:0;
+  display:none;
+  background-image:url("scene-poster.jpg");
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-color:var(--night);
+  filter:saturate(1.04) contrast(1.02);
+  transform-origin:50% 45%;
+  will-change:transform;
+}
+@media (max-width:900px){.scene-still{display:block}}
 .js .scene-video{
   opacity:0;
   transition:opacity .45s ease;
@@ -1267,6 +1280,7 @@ ul,ol{list-style:none;padding:0}
 <main id="top">
   <section class="hero-track" id="hero" aria-label="Introduction">
     <div class="scene" id="scene">
+      <div class="scene-still" id="sceneStill" aria-hidden="true"></div>
       <video class="scene-video" id="sceneVideo" muted playsinline preload="auto" disablepictureinpicture tabindex="-1" aria-hidden="true"
         poster="scene-poster.jpg"></video>
       <div class="shade shade-top" aria-hidden="true"></div>
@@ -1502,6 +1516,7 @@ ul,ol{list-style:none;padding:0}
   var root = document.documentElement;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var video = document.getElementById('sceneVideo');
+  var still = document.getElementById('sceneStill');
   var hero = document.getElementById('hero');
   var scene = document.getElementById('scene');
   var sceneVeil = document.getElementById('sceneVeil');
@@ -1526,7 +1541,7 @@ ul,ol{list-style:none;padding:0}
 
   var recMode = /(?:^|[?&])rec=1(?:&|$)/.test(window.location.search);
   var mq = window.matchMedia('(max-width: 900px)');
-  var ambientMode = mq.matches && !recMode;
+  var mobileStill = mq.matches && !recMode;
   var currentSrc = mq.matches ? MOBILE_SRC : DESKTOP_SRC;
   var progress = 0;
   var current = 0;
@@ -1577,10 +1592,6 @@ ul,ol{list-style:none;padding:0}
     scrubReady = true;
     video.classList.add('is-ready');
     hideLoader(150);
-    if (ambientMode) {
-      if (!reduced) playAmbient();
-      return;
-    }
     if (video.readyState >= 1) {
       try { video.currentTime = Math.min(current, duration() - END_GUARD); } catch (err) {}
     }
@@ -1588,22 +1599,6 @@ ul,ol{list-style:none;padding:0}
 
   video.addEventListener('error', function () {
     if (blobUrl && video.currentSrc === blobUrl) startStreamingVideo();
-  });
-
-  video.addEventListener('ended', function () {
-    if (!ambientMode) return;
-    pauseAmbient();
-  });
-
-  video.addEventListener('pause', function () {
-    if (!ambientMode || reduced || !ambient.visible) return;
-    if (document.visibilityState === 'hidden') return;
-    window.setTimeout(function () {
-      if (!video.paused || video.ended) return;
-      if (!ambientMode || reduced || !ambient.visible) return;
-      if (document.visibilityState === 'hidden') return;
-      playAmbient();
-    }, 30);
   });
 
   var POSTER = video.getAttribute('poster');
@@ -1616,33 +1611,27 @@ ul,ol{list-style:none;padding:0}
   var blobUrl = null;
   var blobAbort = null;
   var loadToken = 0;
-  var ambient = { visible: true };
   function startStreamingVideo() {
     video.src = currentSrc;
     video.load();
   }
-  function playAmbient() {
-    if (!ambientMode || reduced || !ambient.visible || !video.paused) return;
-    if (video.ended) return;
-    var attempt = video.play();
-    if (attempt && attempt.catch) attempt.catch(function () {});
-  }
-  function pauseAmbient() {
-    if (!ambientMode) return;
+  function showStill() {
     try { video.pause(); } catch (err) {}
+    video.autoplay = false;
+    video.loop = false;
+    video.removeAttribute('src');
+    try { video.load(); } catch (err) {}
+    hideLoader(0);
   }
   function preloadSceneVideo() {
-    ambientMode = mq.matches && !recMode;
+    mobileStill = mq.matches && !recMode;
     scrubReady = false;
     video.classList.remove('is-ready');
-    if (ambientMode) {
+    if (mobileStill) {
       if (blobAbort) { try { blobAbort.abort(); } catch (err) {} blobAbort = null; }
       loadToken++;
       if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (err) {} blobUrl = null; }
-      video.loop = false;
-      video.autoplay = !reduced;
-      video.muted = true;
-      startStreamingVideo();
+      showStill();
       return;
     }
     video.loop = false;
@@ -1683,25 +1672,6 @@ ul,ol{list-style:none;padding:0}
 
   preloadSceneVideo();
 
-  /* ---------- ambient playback (narrow viewports) ---------- */
-  if ('IntersectionObserver' in window) {
-    var ambientIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        ambient.visible = entry.isIntersecting;
-        if (!ambientMode) return;
-        if (ambient.visible) playAmbient();
-        else pauseAmbient();
-      });
-    }, { threshold: 0.01 });
-    ambientIO.observe(scene);
-  }
-  function nudgeAmbient() {
-    if (!ambientMode) return;
-    if (ambient.visible) playAmbient();
-  }
-  window.addEventListener('touchstart', nudgeAmbient, { passive: true });
-  window.addEventListener('pointerdown', nudgeAmbient, { passive: true });
-
   /* ---------- scroll-driven scene ---------- */
   function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
@@ -1740,7 +1710,7 @@ ul,ol{list-style:none;padding:0}
   var lastSeekAt = 0;
   var scrubReady = false;
   function requestSeek(time) {
-    if (ambientMode) return;
+    if (mobileStill) return;
     if (!video || !scrubReady || video.readyState < 1 || video.seeking) return;
     var safe = clamp(time, 0, Math.max(0, duration() - END_GUARD));
     if (Math.abs(video.currentTime - safe) <= FRAME) return;
@@ -1751,7 +1721,7 @@ ul,ol{list-style:none;padding:0}
   }
 
   video.addEventListener('seeked', function () {
-    if (ambientMode || video.seeking) return;
+    if (mobileStill || video.seeking) return;
     if (Math.abs(video.currentTime - current) > FRAME) requestSeek(current);
   });
 
@@ -1774,6 +1744,10 @@ ul,ol{list-style:none;padding:0}
       heroCopy.style.transform = 'translate3d(0,' + (-22 * h).toFixed(3) + 'vh,0) scale(' + (1 - 0.08 * h).toFixed(4) + ')';
     } else {
       heroCopy.style.transform = 'translate3d(0,' + (-34 * h).toFixed(3) + 'vh,0) rotateX(' + (62 * h).toFixed(3) + 'deg) scale(' + (1 - 0.12 * h).toFixed(4) + ')';
+    }
+    if (mobileStill && !reduced) {
+      var drift = easeInOutQuad(clamp(p / 0.55, 0, 1));
+      still.style.transform = 'translate3d(0,' + (-3.2 * drift).toFixed(2) + 'vh,0) scale(' + (1 + 0.1 * drift).toFixed(4) + ')';
     }
     heroCopy.style.opacity = copyOpacity.toFixed(3);
     var wantPointer = copyOpacity < 0.05 ? 'none' : 'auto';
@@ -1926,7 +1900,7 @@ ul,ol{list-style:none;padding:0}
       lastP = p;
       lastPast = pastKey;
       progress = p;
-      if (!ambientMode) {
+      if (!mobileStill) {
         var target = p * Math.max(0, duration() - END_GUARD);
         current = target;
         current = clamp(current, 0, Math.max(0, duration() - END_GUARD));
