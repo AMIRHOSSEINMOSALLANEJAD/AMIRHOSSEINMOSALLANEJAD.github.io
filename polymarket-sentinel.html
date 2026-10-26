@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Polymarket Sentinel — a paper-first trading desk</title>
+<meta name="description" content="Polymarket Sentinel is a paper-first trading desk for five-minute BTC markets: seven async agents, one risk gate, one human switch." />
+<meta name="author" content="Amirhossein Mosallanejad" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://amirhosseinmosallanejad.github.io/polymarket-sentinel.html" />
+<link rel="me" href="https://github.com/AMIRHOSSEINMOSALLANEJAD" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0f1626" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Amirhossein Mosallanejad" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://amirhosseinmosallanejad.github.io/polymarket-sentinel.html" />
+<meta property="og:title" content="Polymarket Sentinel — speed with a stop button" />
+<meta property="og:description" content="A paper-first trading desk for Polymarket's five-minute BTC markets. Seven async agents, one risk gate, one human switch." />
+<meta property="og:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<meta property="og:image:alt" content="An isometric night scene with a glowing blue building and cooling towers." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Polymarket Sentinel — speed with a stop button" />
+<meta name="twitter:description" content="Case study: seven async agents, one risk gate, one human switch." />
+<meta name="twitter:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Polymarket Sentinel",
+  "url": "https://amirhosseinmosallanejad.github.io/polymarket-sentinel.html",
+  "description": "A paper-first trading desk for Polymarket's five-minute BTC markets, built from seven async agents with a single risk gate and an explicit human switch for the live path.",
+  "creator": {
+    "@type": "Person",
+    "name": "Amirhossein Mosallanejad",
+    "url": "https://amirhosseinmosallanejad.github.io/"
+  },
+  "keywords": "prediction markets, trading systems, AI agents, risk management, Python, asyncio",
+  "isAccessibleForFree": true
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1626'/%3E%3Cpath d='M18 46 31 17h3l13 29h-7l-3-8H27l-3 8z' fill='%23c6ff2e'/%3E%3C/svg%3E" />
+<link rel="preload" href="inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="case case-cyan">
+
+<a class="skip" href="#main">Skip to case study</a>
+
+<header class="topbar">
+  <a class="wordmark" href="index.html" aria-label="Amirhossein — back to portfolio">Amirhossein<span>.</span></a>
+  <nav class="topnav" aria-label="Case navigation">
+    <a href="index.html#work">Selected work</a>
+    <a href="index.html#about">About</a>
+    <a class="topcta" href="mailto:mosalanejadamirhossein@gmail.com?subject=Polymarket%20Sentinel%20walkthrough">Request walkthrough <span class="arr" aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="case-hero" aria-labelledby="case-title">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index.html">Index</a><span aria-hidden="true">/</span>
+        <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
+        <b>Case 02</b>
+      </nav>
+      <p class="kicker"><i aria-hidden="true"></i>Private build — market systems</p>
+      <h1 id="case-title">Polymarket<br />Sentinel</h1>
+      <p class="standfirst">A paper-first trading desk for Polymarket's five-minute BTC markets. Seven async agents split the work; <strong>the live path arms only through an explicit human switch.</strong></p>
+      <ul class="hero-meta" aria-label="Project facts">
+        <li><span>Role</span><b>Design &amp; build</b></li>
+        <li><span>Scope</span><b>7 agents, dashboard, overlay</b></li>
+        <li><span>Status</span><b>Private / paper-first</b></li>
+        <li><span>Stack</span><b>Python · asyncio · CLOB</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="problem-title">
+    <div class="wrap split">
+      <p class="label"><span>01</span>The problem</p>
+      <div>
+        <h2 id="problem-title">Five-minute markets reset constantly. <em>Judgment has to survive the reset.</em></h2>
+        <div class="prose">
+          <p>Polymarket's short-horizon BTC markets open and close all day. Each window is a fresh question with a deadline measured in minutes, and the data that matters — price, momentum, order book — moves faster than a person can watch it.</p>
+          <p>A model can look sharp on win rate while still losing to fees, spread and the cost of being wrong at the wrong minute. Speed without a risk boundary is not a desk; it is a slot machine with better charts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="agents-title">
+    <div class="wrap">
+      <p class="label"><span>02</span>Seven agents, one desk</p>
+      <h2 id="agents-title" class="band-title">Separated work. <em>One shared picture.</em></h2>
+      <div class="prose">
+        <p>The system is not one large loop. Seven async agents own one job each and communicate through shared state, so a failure in discovery cannot silently become an order.</p>
+      </div>
+      <ul class="agents" aria-label="Agent responsibilities">
+        <li class="agent"><span>01</span><h3>Data</h3><p>Streams price and market context into a consistent frame.</p></li>
+        <li class="agent"><span>02</span><h3>Signals</h3><p>Turns indicators into a probability, not a verdict.</p></li>
+        <li class="agent"><span>03</span><h3>Discovery</h3><p>Finds the active window and its tradable strikes.</p></li>
+        <li class="agent"><span>04</span><h3>Risk</h3><p>Applies limits, exposure and the single order gate.</p></li>
+        <li class="agent"><span>05</span><h3>Exits</h3><p>Watches the position and closes on its own rules.</p></li>
+        <li class="agent"><span>06</span><h3>Execution</h3><p>Routes approved orders to paper or live, never both.</p></li>
+        <li class="agent"><span>07</span><h3>Reporting</h3><p>Records fills, edge and outcome per window.</p></li>
+        <li class="agent is-human"><span>Human</span><h3>Owner switch</h3><p>Arms or disarms the live path. Paper is always on.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="gate-title">
+    <div class="wrap">
+      <div class="split">
+        <p class="label"><span>03</span>The risk gate</p>
+        <div>
+          <h2 id="gate-title">One choke point. <em>Nothing routes around it.</em></h2>
+          <div class="prose">
+            <p>New orders pass one risk gate before execution. The gate can refuse an order but cannot create one. The live path stays disarmed until a human flips the switch, and the switch is deliberately boring to use — no shortcut from a promising chart to a real position.</p>
+          </div>
+        </div>
+      </div>
+      <ol class="flow" aria-label="Order pipeline">
+        <li class="step">
+          <h3>Discover</h3>
+          <p>The active five-minute window and its strikes are identified.</p>
+        </li>
+        <li class="step">
+          <h3>Score</h3>
+          <p>Signals produce a probability for the window's outcome.</p>
+        </li>
+        <li class="step is-gate">
+          <h3>Risk gate</h3>
+          <p>Limits, exposure and edge must all clear before an order exists.</p>
+        </li>
+        <li class="step">
+          <h3>Route</h3>
+          <p>Paper by default. Live only when the owner has armed it.</p>
+        </li>
+      </ol>
+      <div class="callout">
+        <p><strong>Win rate is not edge.</strong> The read-only dashboard and browser overlay keep both numbers in view — the model's confidence and what the outcome actually paid — so a good-looking call never hides a bad fill.</p>
+        <div class="big">8,626<small>Windows tested</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="works-title">
+    <div class="wrap">
+      <p class="label"><span>04</span>How it works</p>
+      <h2 id="works-title" class="band-title">Paper first. <em>Evidence in view.</em></h2>
+      <div class="cards">
+        <div class="card">
+          <span class="cnum">01</span>
+          <h3>One event loop</h3>
+          <p>asyncio fans out data, signals and exits. Agents read and write shared state instead of calling each other in a chain.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">02</span>
+          <h3>Paper by default</h3>
+          <p>Every order fills against a paper book first. The live path is a separate route that requires the owner's switch.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">03</span>
+          <h3>Two numbers, always</h3>
+          <p>The dashboard and a Chrome MV3 overlay show edge and win rate side by side before anything is clicked.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:clamp(28px,3.6vw,42px)">
+        <p><strong>What the backtest actually said.</strong> Over 30 days and 8,626 market windows, calls at or above 70% confidence scored 80–93% by entry minute. That is a calibration result, not a promise of profit — which is exactly why the overlay keeps edge and win rate in the same frame.</p>
+        <div class="big">30d<small>Backtest span</small></div>
+      </div>
+      <dl class="stats-band" style="margin-top:clamp(34px,4.6vw,54px)" aria-label="Sentinel in numbers">
+        <div><dt>Async agents</dt><dd>07</dd></div>
+        <div><dt>Market windows</dt><dd>5m</dd></div>
+        <div><dt>Windows tested</dt><dd>8,626</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="stack-title">
+    <div class="wrap split">
+      <p class="label"><span>05</span>Stack &amp; status</p>
+      <div>
+        <h2 id="stack-title">Built to be stopped.</h2>
+        <div class="prose">
+          <p>Python and asyncio carry the agent loop, pandas-ta handles the signal layer, SQLite stores every window and fill, and the CLOB client handles market data and routing. The overlay is a small Chrome MV3 extension — visible, read-only, and easy to close.</p>
+        </div>
+        <ul class="tags" aria-label="Stack">
+          <li>Python</li><li>asyncio</li><li>pandas-ta</li><li>Polymarket CLOB</li><li>SQLite</li><li>Chrome MV3</li>
+        </ul>
+        <div class="prose">
+          <p class="muted-note">Private repository. A walkthrough covers the agent map, the risk gate and the paper-to-live switch — with the backtest numbers in context.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <h2 id="cta-title">Ask to see <em>the risk gate.</em></h2>
+      <p>I can show the agent fan-out, the order path and the moment the system refuses a trade. The interesting part is the refusal.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:mosalanejadamirhossein@gmail.com?subject=Polymarket%20Sentinel%20walkthrough">Request a walkthrough <span aria-hidden="true">↗</span></a>
+        <a class="btn-ghost" href="index.html#work">Back to selected work</a>
+      </div>
+    </div>
+  </section>
+
+  <a class="next wrap" href="replymate.html" aria-label="Next case: ReplyMate">
+    <span>
+      <span class="nlabel">Next case — 01</span>
+      <span class="ntitle">ReplyMate</span>
+    </span>
+    <span class="narr" aria-hidden="true">↗</span>
+  </a>
+
+  <footer class="footer wrap">
+    <span>© 2026 Amirhossein Mosallanejad</span>
+    <span>Yerevan, Armenia</span>
+    <span class="lime">Private build</span>
+    <a href="index.html">Back to index <span aria-hidden="true">↑</span></a>
+  </footer>
+
+</main>
+</body>
+</html>

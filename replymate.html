@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ReplyMate — a human-in-the-loop inbox agent</title>
+<meta name="description" content="ReplyMate is a multi-account inbox agent for Instagram, WhatsApp and Telegram. It drafts in its owner's voice and sends nothing without a human tap." />
+<meta name="author" content="Amirhossein Mosallanejad" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://amirhosseinmosallanejad.github.io/replymate.html" />
+<link rel="me" href="https://github.com/AMIRHOSSEINMOSALLANEJAD" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0f1626" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Amirhossein Mosallanejad" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://amirhosseinmosallanejad.github.io/replymate.html" />
+<meta property="og:title" content="ReplyMate — agents that draft, humans that send" />
+<meta property="og:description" content="A multi-account inbox agent for Instagram, WhatsApp and Telegram. Drafts in the owner's voice; sends no text without a human tap." />
+<meta property="og:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<meta property="og:image:alt" content="An isometric night scene with a glowing blue building and cooling towers." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ReplyMate — agents that draft, humans that send" />
+<meta name="twitter:description" content="Case study: a multi-account inbox agent with a human approval gate." />
+<meta name="twitter:image" content="https://amirhosseinmosallanejad.github.io/scene-poster.jpg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "ReplyMate",
+  "url": "https://amirhosseinmosallanejad.github.io/replymate.html",
+  "description": "A multi-account inbox agent for Instagram, WhatsApp and Telegram that drafts replies in its owner's voice and sends nothing without human approval.",
+  "creator": {
+    "@type": "Person",
+    "name": "Amirhossein Mosallanejad",
+    "url": "https://amirhosseinmosallanejad.github.io/"
+  },
+  "keywords": "AI agent, inbox automation, human-in-the-loop, Python, Flask",
+  "isAccessibleForFree": true
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1626'/%3E%3Cpath d='M18 46 31 17h3l13 29h-7l-3-8H27l-3 8z' fill='%23c6ff2e'/%3E%3C/svg%3E" />
+<link rel="preload" href="inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="case case-lime">
+
+<a class="skip" href="#main">Skip to case study</a>
+
+<header class="topbar">
+  <a class="wordmark" href="index.html" aria-label="Amirhossein — back to portfolio">Amirhossein<span>.</span></a>
+  <nav class="topnav" aria-label="Case navigation">
+    <a href="index.html#work">Selected work</a>
+    <a href="index.html#about">About</a>
+    <a class="topcta" href="mailto:mosalanejadamirhossein@gmail.com?subject=ReplyMate%20walkthrough">Request walkthrough <span class="arr" aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="case-hero" aria-labelledby="case-title">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index.html">Index</a><span aria-hidden="true">/</span>
+        <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
+        <b>Case 01</b>
+      </nav>
+      <p class="kicker"><i aria-hidden="true"></i>Private build — inbox systems</p>
+      <h1 id="case-title">ReplyMate</h1>
+      <p class="standfirst">A multi-account inbox agent that reads Instagram, WhatsApp and Telegram, drafts replies in its owner's voice, and <strong>sends nothing without a human tap.</strong></p>
+      <ul class="hero-meta" aria-label="Project facts">
+        <li><span>Role</span><b>Design &amp; build</b></li>
+        <li><span>Scope</span><b>Agent, server, console</b></li>
+        <li><span>Status</span><b>Private / live</b></li>
+        <li><span>Stack</span><b>Python · Flask · SQLite</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="problem-title">
+    <div class="wrap split">
+      <p class="label"><span>01</span>The problem</p>
+      <div>
+        <h2 id="problem-title">Inbox work is triage. <em>Automating it is a trust problem.</em></h2>
+        <div class="prose">
+          <p>A message arrives. The owner reads it, works out what it means, writes a reply, and moves on — dozens of times a day across apps that each want their own attention. Most of that effort is not writing. It is deciding.</p>
+          <p>Automating the draft is easy. Automating the judgment is not. A wrong message in the owner's voice costs more than a slow one, so the system had to be fast at drafting and completely unwilling to send on its own.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="does-title">
+    <div class="wrap">
+      <p class="label"><span>02</span>What it does</p>
+      <h2 id="does-title" class="band-title">Four surfaces in, one queue out. <em>Every reply waits for a person.</em></h2>
+      <div class="cards">
+        <div class="card">
+          <span class="cnum">A</span>
+          <h3>One queue, four surfaces</h3>
+          <p>Instagram, WhatsApp, Telegram and an owner console feed a single review list. Each message is normalised into one conversation model, per account.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">B</span>
+          <h3>Drafts in the owner's voice</h3>
+          <p>A persona profile built from approved examples writes a candidate reply for each thread, matching tone and language rather than sounding like a bot.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">C</span>
+          <h3>Stops at the tap</h3>
+          <p>Every draft lands in an approval view. Approve, edit or reject. Nothing leaves the system without one of those three actions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="gate-title">
+    <div class="wrap">
+      <div class="split">
+        <p class="label"><span>03</span>The approval gate</p>
+        <div>
+          <h2 id="gate-title">The gate is the product. <em>Everything else supports it.</em></h2>
+          <div class="prose">
+            <p>A draft is not a sent message. The queue keeps those two states separate, preserves the original text, and records exactly what the human changed. Rejections matter as much as approvals — they are the clearest signal that the persona drifted.</p>
+          </div>
+        </div>
+      </div>
+      <ol class="flow" aria-label="Approval pipeline">
+        <li class="step">
+          <h3>Inbound</h3>
+          <p>A signed webhook delivers the message; duplicates are dropped per account.</p>
+        </li>
+        <li class="step">
+          <h3>Draft</h3>
+          <p>The connector and persona model write a candidate reply, never more than one.</p>
+        </li>
+        <li class="step is-gate">
+          <h3>Human review</h3>
+          <p>Owner approves, edits or rejects. This is the only path to a send.</p>
+        </li>
+        <li class="step">
+          <h3>Send</h3>
+          <p>An approved text goes back through the platform API, with the decision logged.</p>
+        </li>
+      </ol>
+      <div class="callout">
+        <p><strong>Zero unapproved sends.</strong> Every outbound message is traceable to a human decision. The log keeps the draft, the edit and the final text side by side, so the agent's behaviour can be audited after the fact.</p>
+        <div class="big">00<small>Unapproved texts</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="works-title">
+    <div class="wrap">
+      <p class="label"><span>04</span>How it works</p>
+      <h2 id="works-title" class="band-title">Small stack. <em>Deliberate boundaries.</em></h2>
+      <div class="cards">
+        <div class="card">
+          <span class="cnum">01</span>
+          <h3>One server, many accounts</h3>
+          <p>A Flask service runs connector workers per account with signed webhooks, per-account secrets and owner-only console routes.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">02</span>
+          <h3>SQLite as the ledger</h3>
+          <p>Conversations, drafts, approvals and edits live in one file with per-account isolation and a simple backup story.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">03</span>
+          <h3>A weekly persona loop</h3>
+          <p>Approvals, edits and rejections become feedback. A scheduled job refreshes the persona profile every seven days.</p>
+        </div>
+      </div>
+      <dl class="stats-band" style="margin-top:clamp(34px,4.6vw,54px)" aria-label="ReplyMate in numbers">
+        <div><dt>Surfaces unified</dt><dd>04</dd></div>
+        <div><dt>Unapproved texts</dt><dd>00</dd></div>
+        <div><dt>Persona loop</dt><dd>7d</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="stack-title">
+    <div class="wrap split">
+      <p class="label"><span>05</span>Stack &amp; status</p>
+      <div>
+        <h2 id="stack-title">Boring on purpose.</h2>
+        <div class="prose">
+          <p>A Python service, one database file, platform connectors and a private console. Less surface area means fewer places for an approval step to be skipped — and a system that stays understandable a year later.</p>
+        </div>
+        <ul class="tags" aria-label="Stack">
+          <li>Python</li><li>Flask</li><li>SQLite</li><li>Telegram Bot API</li><li>Instagram Graph API</li><li>WhatsApp connector</li><li>Signed webhooks</li><li>Docker</li>
+        </ul>
+        <div class="prose">
+          <p class="muted-note">Private repository. The code stays closed; the architecture does not. A walkthrough covers the queue, the gate and the persona loop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <h2 id="cta-title">See the approval loop <em>in motion.</em></h2>
+      <p>I can walk you through the review console, the webhook flow and how rejections turn into persona updates — no slides, just the running system.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:mosalanejadamirhossein@gmail.com?subject=ReplyMate%20walkthrough">Request a walkthrough <span aria-hidden="true">↗</span></a>
+        <a class="btn-ghost" href="index.html#work">Back to selected work</a>
+      </div>
+    </div>
+  </section>
+
+  <a class="next wrap" href="polymarket-sentinel.html" aria-label="Next case: Polymarket Sentinel">
+    <span>
+      <span class="nlabel">Next case — 02</span>
+      <span class="ntitle">Polymarket Sentinel</span>
+    </span>
+    <span class="narr" aria-hidden="true">↗</span>
+  </a>
+
+  <footer class="footer wrap">
+    <span>© 2026 Amirhossein Mosallanejad</span>
+    <span>Yerevan, Armenia</span>
+    <span class="lime">Private build</span>
+    <a href="index.html">Back to index <span aria-hidden="true">↑</span></a>
+  </footer>
+
+</main>
+</body>
+</html>

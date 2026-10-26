@@ -601,7 +601,6 @@ ul,ol{list-style:none;padding:0}
   transform:scaleX(0);transform-origin:left center;
   transition:transform .65s var(--ease);
 }
-.project:hover::before{transform:scaleX(1)}
 .p-num{
   padding-top:calc(var(--u) * 8);
   font-size:calc(var(--u) * 11);
@@ -611,7 +610,6 @@ ul,ol{list-style:none;padding:0}
   font-variant-numeric:tabular-nums;
   transition:color .3s ease;
 }
-.project:hover .p-num{color:var(--accent)}
 .p-top{display:flex;align-items:center;flex-wrap:wrap;gap:calc(var(--u) * 16)}
 .p-top h3{
   font-size:calc(var(--u) * 46);
@@ -713,6 +711,125 @@ ul,ol{list-style:none;padding:0}
   color:var(--ink-46);
 }
 .p-side-foot i{display:inline-block;width:calc(var(--u) * 5);height:calc(var(--u) * 5);background:var(--accent);margin-right:calc(var(--u) * 6)}
+
+/* ---------- featured case cards ---------- */
+.case-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:calc(var(--u) * 16);
+  margin-top:calc(var(--u) * 62);
+}
+.case-card{
+  --accent:var(--lime);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  padding:calc(var(--u) * 30);
+  border:1px solid var(--line);
+  border-radius:calc(var(--u) * 4);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.006));
+  transition:border-color .35s ease,background .35s ease,transform .35s var(--ease);
+  scroll-margin-top:calc(var(--u) * 92);
+  overflow:hidden;
+}
+.case-card::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:2px;
+  background:var(--accent);
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform .7s var(--ease);
+}
+.case-card[data-accent="cyan"]{--accent:var(--cyan)}
+.cc-head{display:flex;align-items:center;justify-content:space-between;gap:calc(var(--u) * 14)}
+.cc-num{
+  font-size:calc(var(--u) * 10.5);
+  font-weight:500;
+  letter-spacing:.16em;
+  color:var(--ink-46);
+  font-variant-numeric:tabular-nums;
+  transition:color .3s ease;
+}
+.case-card h3{
+  margin-top:calc(var(--u) * 24);
+  font-size:calc(var(--u) * 48);
+  font-weight:600;
+  line-height:1;
+  letter-spacing:-.04em;
+}
+.cc-lede{
+  margin-top:calc(var(--u) * 16);
+  max-width:calc(var(--u) * 470);
+  font-size:calc(var(--u) * 15.5);
+  line-height:1.6;
+  color:var(--ink-72);
+  text-wrap:pretty;
+}
+.cc-lede strong{color:var(--ink);font-weight:500}
+.case-card .tags{margin-top:calc(var(--u) * 20)}
+.cc-foot{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:calc(var(--u) * 16);
+  margin-top:calc(var(--u) * 30);
+  padding-top:calc(var(--u) * 18);
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.cc-stats{display:flex;gap:calc(var(--u) * 22);flex-wrap:wrap}
+.cc-stats span{
+  font-size:calc(var(--u) * 9);
+  font-weight:500;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--ink-46);
+}
+.cc-stats b{
+  display:block;
+  margin-bottom:calc(var(--u) * 3);
+  font-size:calc(var(--u) * 20);
+  font-weight:500;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  font-variant-numeric:tabular-nums;
+  text-transform:none;
+}
+.cc-go{
+  display:inline-flex;
+  align-items:center;
+  gap:calc(var(--u) * 8);
+  padding-bottom:calc(var(--u) * 4);
+  border-bottom:1px solid var(--accent);
+  font-size:calc(var(--u) * 10);
+  font-weight:500;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--accent);
+  white-space:nowrap;
+}
+.cc-go .arr{transition:transform .3s var(--ease)}
+@media (hover:hover){
+  .case-card:hover{
+    border-color:rgba(198,255,46,.4);
+    background:linear-gradient(180deg,rgba(198,255,46,.055),rgba(255,255,255,.006));
+  }
+  .case-card[data-accent="cyan"]:hover{border-color:rgba(63,216,255,.4);background:linear-gradient(180deg,rgba(63,216,255,.055),rgba(255,255,255,.006))}
+  .case-card:hover::before{transform:scaleX(1)}
+  .case-card:hover .cc-num{color:var(--accent)}
+  .case-card:hover .cc-go .arr{transform:translate(2px,-2px)}
+  .project:hover::before{transform:scaleX(1)}
+  .project:hover .p-num{color:var(--accent)}
+}
+.studies-label{
+  display:flex;align-items:center;gap:calc(var(--u) * 12);
+  margin-top:calc(var(--u) * 74);
+  font-size:calc(var(--u) * 9.5);
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-46);
+}
+.studies-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.projects.projects-studies{margin-top:calc(var(--u) * 26);border-top:1px solid var(--line)}
 
 /* ---------- about ---------- */
 .about{border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.012),transparent 30%)}
@@ -920,11 +1037,14 @@ ul,ol{list-style:none;padding:0}
 @media (max-width:900px){
   .scene-video{filter:none}
   .stage{perspective:none}
+  .nav{
+    transition:none;
+  }
   .nav.is-scrolled{
     -webkit-backdrop-filter:none;
     backdrop-filter:none;
-    background:rgba(15,22,38,.88);
-    transition:background .45s ease, border-color .45s ease;
+    background:#0f1626;
+    transition:none;
   }
   .pill-mail{
     -webkit-backdrop-filter:none;
@@ -935,6 +1055,7 @@ ul,ol{list-style:none;padding:0}
   .section-head,.about-grid{grid-template-columns:minmax(0,1fr);gap:calc(var(--u) * 26)}
   .section-head .section-label,.about .section-label{padding-top:0}
   .projects{margin-top:calc(var(--u) * 70)}
+  .case-grid{grid-template-columns:minmax(0,1fr);margin-top:calc(var(--u) * 40)}
   .project{grid-template-columns:calc(var(--u) * 36) minmax(0,1fr);gap:calc(var(--u) * 22)}
   .p-side{grid-column:2;flex-direction:row;align-items:flex-start;padding-top:0;gap:calc(var(--u) * 30)}
   .stats{flex:1;max-width:calc(var(--u) * 440)}
@@ -1012,6 +1133,18 @@ ul,ol{list-style:none;padding:0}
   .section-head h2,.about-lede{font-size:clamp(32px,9.4vw,42px);letter-spacing:-.035em}
   .section-intro{font-size:14.5px;margin-top:18px}
   .projects{margin-top:54px}
+  .case-grid{gap:10px;margin-top:32px}
+  .case-card{padding:20px 18px}
+  .case-card h3{font-size:clamp(30px,8.4vw,36px);margin-top:18px}
+  .cc-head .badge{font-size:7.5px;padding:4px 8px}
+  .cc-lede{font-size:14px;line-height:1.55;margin-top:12px}
+  .case-card .tags{margin-top:14px}
+  .cc-foot{margin-top:22px;padding-top:14px;gap:12px}
+  .cc-stats{gap:18px}
+  .cc-stats span{font-size:8px}
+  .cc-stats b{font-size:17px}
+  .cc-go{font-size:9px}
+  .studies-label{margin-top:52px;font-size:9px}
   .project{
     grid-template-columns:24px minmax(0,1fr);
     gap:10px 12px;
@@ -1159,12 +1292,12 @@ ul,ol{list-style:none;padding:0}
 
         <aside class="worklist" id="worklist" aria-label="Selected work teaser">
           <div class="wl-head"><span>Selected work</span><span aria-hidden="true">01 — 02</span></div>
-          <a class="wl-row is-active" href="#replymate" data-step="1" aria-current="true">
+          <a class="wl-row is-active" href="replymate.html" data-step="1">
             <span class="wl-index">01</span>
             <span class="wl-name">ReplyMate</span>
             <span class="wl-meta">Inbox agent</span>
           </a>
-          <a class="wl-row" href="#polymarket-sentinel" data-step="2">
+          <a class="wl-row" href="polymarket-sentinel.html" data-step="2">
             <span class="wl-index">02</span>
             <span class="wl-name">Polymarket Sentinel</span>
             <span class="wl-meta">Market systems</span>
@@ -1197,62 +1330,55 @@ ul,ol{list-style:none;padding:0}
           <p class="section-label reveal"><span>01</span> Selected work</p>
           <div class="reveal">
             <h2 id="work-title">Built to run without me.<br /><em>Designed to ask first.</em></h2>
-            <p class="section-intro">Two systems I've built and two open-source studies that shaped how I build. Autonomy is only as good as its stop button.</p>
+            <p class="section-intro">Two systems I've built — each with its own case study — and two open-source studies that shaped how I build. Autonomy is only as good as its stop button.</p>
           </div>
         </header>
 
-        <div class="projects">
-          <article class="project reveal" id="replymate" data-kind="build">
-            <div class="p-num" aria-hidden="true">01</div>
-            <div class="p-main">
-              <div class="p-top">
-                <h3>ReplyMate</h3>
-                <span class="badge">Private build</span>
-              </div>
-              <p class="p-lede">A multi-account inbox agent for Instagram, WhatsApp and Telegram. It reads the incoming noise, drafts replies in its owner's voice, and <strong>sends no text without a human tap.</strong> Every approval, edit or rejection becomes training data; the persona refreshes weekly. One server handles many accounts, with signed webhooks and owner-only controls.</p>
-              <ul class="tags" aria-label="Stack">
-                <li>Python</li><li>Flask</li><li>SQLite</li><li>Telegram Bot API</li><li>Instagram Graph API</li><li>Docker</li>
-              </ul>
-              <div class="p-actions">
-                <a class="p-link" href="mailto:mosalanejadamirhossein@gmail.com?subject=ReplyMate%20walkthrough">Request a walkthrough <span aria-hidden="true">↗</span></a>
-              </div>
+        <div class="case-grid">
+          <a class="case-card reveal" id="replymate" href="replymate.html" data-accent="lime">
+            <div class="cc-head">
+              <span class="cc-num">01</span>
+              <span class="badge">Private build</span>
             </div>
-            <aside class="p-side" aria-label="ReplyMate at a glance">
-              <dl class="stats">
-                <div><dt>Surfaces unified</dt><dd>04</dd></div>
-                <div><dt>Unapproved texts</dt><dd>00</dd></div>
-                <div><dt>Persona loop</dt><dd>7d</dd></div>
-              </dl>
-              <p class="p-side-foot"><i aria-hidden="true"></i> Private repository — walkthrough on request</p>
-            </aside>
-          </article>
-
-          <article class="project reveal" id="polymarket-sentinel" data-kind="build">
-            <div class="p-num" aria-hidden="true">02</div>
-            <div class="p-main">
-              <div class="p-top">
-                <h3>Polymarket Sentinel</h3>
-                <span class="badge">Private build</span>
+            <h3>ReplyMate</h3>
+            <p class="cc-lede">A multi-account inbox agent for Instagram, WhatsApp and Telegram. It drafts replies in its owner's voice and <strong>sends no text without a human tap.</strong></p>
+            <ul class="tags" aria-label="Stack">
+              <li>Python</li><li>Flask</li><li>SQLite</li><li>Telegram Bot API</li>
+            </ul>
+            <div class="cc-foot">
+              <div class="cc-stats">
+                <span><b>04</b>Surfaces unified</span>
+                <span><b>00</b>Unapproved texts</span>
+                <span><b>7d</b>Persona loop</span>
               </div>
-              <p class="p-lede">A paper-first trading desk for Polymarket's five-minute BTC markets. Seven async agents split the work — data, signals, discovery, risk, exits, execution, reporting. New orders pass one risk gate; the live path arms only through an explicit human switch. A read-only dashboard and browser overlay surface the model's edge before anything is clicked.</p>
-              <p class="p-note">A 30-day, 8,626-window backtest scored its ≥70% calls at 80–93% by entry minute. Win rate is not edge — the overlay keeps both numbers in view.</p>
-              <ul class="tags" aria-label="Stack">
-                <li>Python</li><li>asyncio</li><li>pandas-ta</li><li>Polymarket CLOB</li><li>SQLite</li><li>Chrome MV3</li>
-              </ul>
-              <div class="p-actions">
-                <a class="p-link" href="mailto:mosalanejadamirhossein@gmail.com?subject=Polymarket%20Sentinel%20walkthrough">Request a walkthrough <span aria-hidden="true">↗</span></a>
-              </div>
+              <span class="cc-go">Read case study <span class="arr" aria-hidden="true">↗</span></span>
             </div>
-            <aside class="p-side" aria-label="Polymarket Sentinel at a glance">
-              <dl class="stats">
-                <div><dt>Async agents</dt><dd>07</dd></div>
-                <div><dt>Market windows</dt><dd>5m</dd></div>
-                <div><dt>Windows tested</dt><dd>8,626</dd></div>
-              </dl>
-              <p class="p-side-foot"><i aria-hidden="true"></i> Private repository — walkthrough on request</p>
-            </aside>
-          </article>
+          </a>
 
+          <a class="case-card reveal" id="polymarket-sentinel" href="polymarket-sentinel.html" data-accent="cyan">
+            <div class="cc-head">
+              <span class="cc-num">02</span>
+              <span class="badge">Private build</span>
+            </div>
+            <h3>Polymarket Sentinel</h3>
+            <p class="cc-lede">A paper-first trading desk for Polymarket's five-minute BTC markets. Seven async agents split the work; the live path arms only through <strong>an explicit human switch.</strong></p>
+            <ul class="tags" aria-label="Stack">
+              <li>Python</li><li>asyncio</li><li>Polymarket CLOB</li><li>Chrome MV3</li>
+            </ul>
+            <div class="cc-foot">
+              <div class="cc-stats">
+                <span><b>07</b>Async agents</span>
+                <span><b>8,626</b>Windows tested</span>
+                <span><b>5m</b>Market windows</span>
+              </div>
+              <span class="cc-go">Read case study <span class="arr" aria-hidden="true">↗</span></span>
+            </div>
+          </a>
+        </div>
+
+        <p class="studies-label reveal">Open-source studies</p>
+
+        <div class="projects projects-studies">
           <article class="project reveal" id="persianwhisper" data-kind="study">
             <div class="p-num" aria-hidden="true">03</div>
             <div class="p-main">
@@ -1471,15 +1597,14 @@ ul,ol{list-style:none;padding:0}
 
   video.addEventListener('ended', function () {
     if (!ambientMode) return;
-    try { video.currentTime = 0; } catch (err) {}
-    playAmbient();
+    pauseAmbient();
   });
 
   video.addEventListener('pause', function () {
     if (!ambientMode || reduced || !ambient.visible) return;
     if (document.visibilityState === 'hidden') return;
     window.setTimeout(function () {
-      if (!video.paused) return;
+      if (!video.paused || video.ended) return;
       if (!ambientMode || reduced || !ambient.visible) return;
       if (document.visibilityState === 'hidden') return;
       playAmbient();
@@ -1503,6 +1628,7 @@ ul,ol{list-style:none;padding:0}
   }
   function playAmbient() {
     if (!ambientMode || reduced || !ambient.visible || !video.paused) return;
+    if (video.ended) return;
     var attempt = video.play();
     if (attempt && attempt.catch) attempt.catch(function () {});
   }
@@ -1518,7 +1644,7 @@ ul,ol{list-style:none;padding:0}
       if (blobAbort) { try { blobAbort.abort(); } catch (err) {} blobAbort = null; }
       loadToken++;
       if (blobUrl) { try { URL.revokeObjectURL(blobUrl); } catch (err) {} blobUrl = null; }
-      video.loop = true;
+      video.loop = false;
       video.autoplay = !reduced;
       video.muted = true;
       startStreamingVideo();
@@ -1640,8 +1766,6 @@ ul,ol{list-style:none;padding:0}
     rows.forEach(function (row) {
       var isActive = Number(row.getAttribute('data-step')) === step;
       row.classList.toggle('is-active', isActive);
-      if (isActive) row.setAttribute('aria-current', 'true');
-      else row.removeAttribute('aria-current');
     });
   }
 
@@ -1689,6 +1813,31 @@ ul,ol{list-style:none;padding:0}
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  /* On phones, in-page jumps are immediate: smooth-scrolling through the
+     420lvh hero makes the scene feel like it replays and breaks the arrival. */
+  document.addEventListener('click', function (e) {
+    if (!mq.matches || e.defaultPrevented || e.button) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var link = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!link) return;
+    var hash = link.getAttribute('href');
+    if (!hash || hash === '#' || hash === '#top') {
+      e.preventDefault();
+      window.scrollTo(0, 0);
+      return;
+    }
+    var target = document.querySelector(hash);
+    if (!target) return;
+    e.preventDefault();
+    var prevBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    target.scrollIntoView({ block: 'start' });
+    document.documentElement.style.scrollBehavior = prevBehavior;
+    if (history.pushState) {
+      try { history.pushState(null, '', hash); } catch (err) {}
+    }
+  });
 
   /* ---------- recorder mode ---------- */
   var recAnim = null;
