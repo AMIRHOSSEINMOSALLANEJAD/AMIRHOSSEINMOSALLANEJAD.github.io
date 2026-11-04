@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ASR — a pocket assistant that asks first</title>
+<meta name="description" content="ASR is a personal Android assistant: it reads WhatsApp, Telegram and Instagram notifications, drafts the reply in my voice, and waits for my approval before anything is sent." />
+<meta name="author" content="Amirhossein Mosallanejad" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://amirhosseinmosallanejad.github.io/asr.html" />
+<link rel="me" href="https://github.com/AMIRHOSSEINMOSALLANEJAD" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0f1626" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Amirhossein Mosallanejad" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://amirhosseinmosallanejad.github.io/asr.html" />
+<meta property="og:title" content="ASR — a pocket assistant that asks first" />
+<meta property="og:description" content="A personal Android assistant that drafts replies in my voice and waits for my approval before anything is sent." />
+<meta property="og:image" content="https://amirhosseinmosallanejad.github.io/asr-og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="ASR social card: It proposes. I approve. beside the app's home screen." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ASR — a pocket assistant that asks first" />
+<meta name="twitter:description" content="A personal Android assistant that drafts replies in my voice and waits for my approval." />
+<meta name="twitter:image" content="https://amirhosseinmosallanejad.github.io/asr-og.png" />
+<meta name="twitter:image:alt" content="ASR social card: It proposes. I approve. beside the app's home screen." />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "ASR",
+  "url": "https://amirhosseinmosallanejad.github.io/asr.html",
+  "image": "https://amirhosseinmosallanejad.github.io/asr-og.png",
+  "description": "A personal Android assistant that reads messaging notifications, drafts replies in the owner's voice, and sends nothing without approval.",
+  "creator": {
+    "@type": "Person",
+    "name": "Amirhossein Mosallanejad",
+    "url": "https://amirhosseinmosallanejad.github.io/"
+  },
+  "keywords": "personal AI assistant, Android, notification listener, human-in-the-loop",
+  "isAccessibleForFree": true
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f1626'/%3E%3Cpath d='M18 46 31 17h3l13 29h-7l-3-8H27l-3 8z' fill='%23c6ff2e'/%3E%3C/svg%3E" />
+<link rel="preload" href="inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="case-study.css" />
+<link rel="stylesheet" href="asr.css" />
+</head>
+<body class="case case-lime">
+
+<a class="skip" href="#main">Skip to case study</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <a class="wordmark" href="index.html" aria-label="Amirhossein — back to portfolio">Amirhossein<span>.</span></a>
+  <nav class="topnav" aria-label="Case navigation">
+    <a href="index.html#work">Selected work</a>
+    <a href="index.html#about">About</a>
+    <a class="topcta" href="mailto:mosalanejadamirhossein@gmail.com?subject=ASR%20question">Ask about ASR <span class="arr" aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+
+<main id="main">
+
+<nav class="rail" aria-label="Sections in this case study">
+  <a href="#why"><b>Why</b><span class="rn">01</span><i aria-hidden="true"></i></a>
+  <a href="#does"><b>What it does</b><span class="rn">02</span><i aria-hidden="true"></i></a>
+  <a href="#screens"><b>Screens</b><span class="rn">03</span><i aria-hidden="true"></i></a>
+  <a href="#how"><b>How it works</b><span class="rn">04</span><i aria-hidden="true"></i></a>
+  <a href="#privacy"><b>Privacy</b><span class="rn">05</span><i aria-hidden="true"></i></a>
+  <a href="#fa"><b>به فارسی</b><span class="rn">06</span><i aria-hidden="true"></i></a>
+  <a href="#status"><b>Status</b><span class="rn">07</span><i aria-hidden="true"></i></a>
+</nav>
+
+  <section class="case-hero" aria-labelledby="case-title">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index.html">Index</a><span aria-hidden="true">/</span>
+        <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
+        <b>Build 38</b>
+      </nav>
+      <p class="kicker"><i aria-hidden="true"></i>Early build — pocket assistant</p>
+      <h1 id="case-title" class="hero-title">ASR<span class="hero-orb" aria-hidden="true"></span></h1>
+      <p class="standfirst">A personal assistant that lives on the phone, where the messages already arrive. It reads WhatsApp, Telegram and Instagram notifications, writes the reply I would have written, and <strong>waits for my yes.</strong></p>
+      <p class="standfirst-fa" lang="fa" dir="rtl">دستیاری که روی گوشی خودم زندگی می‌کند: اعلان‌ها را می‌خواند، به لحن من جواب می‌نویسد و تا خودم «بفرست» را نزنم، هیچ چیز بیرون نمی‌رود.</p>
+      <ul class="hero-meta" aria-label="Project facts">
+        <li><span>Role</span><b>Design &amp; build</b></li>
+        <li><span>Scope</span><b>Personal app</b></li>
+        <li><span>Platform</span><b>Android, sideloaded</b></li>
+        <li><span>Status</span><b>Build 38, early</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="why" aria-labelledby="why-title">
+    <div class="wrap split">
+      <p class="label"><span>01</span>Why</p>
+      <div>
+        <h2 id="why-title">The messages arrive on the phone. <em>So the assistant had to live there too.</em></h2>
+        <div class="prose">
+          <p>The first version ran on a computer behind a tunnel, and needed app review and a macro tool just to reach my own phone. That is a lot of machinery to answer a text.</p>
+          <p>ASR moved the whole loop onto the device. It watches the notifications the messaging apps already show, decides in my voice, and puts the draft in front of me. No server sits between me and my messages.</p>
+          <p class="fa" lang="fa" dir="rtl">نسخهٔ اول روی کامپیوتر بود و برای رسیدن به گوشی به تونل، بازبینی اپ متا و یک ابزار ماکرو نیاز داشت. ASR کل این حلقه را روی خود گوشی آورد: اعلان‌ها را می‌خواند، به لحن من جواب می‌نویسد و پیش‌نویس را نشانم می‌دهد. هیچ سروری بین من و پیام‌هایم نیست.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="does" aria-labelledby="does-title">
+    <div class="wrap">
+      <p class="label"><span>02</span>What it does</p>
+      <h2 id="does-title" class="band-title">A watcher, a writer, <em>and a stop button that stays mine.</em></h2>
+      <p class="lede-fa" lang="fa" dir="rtl">یک نگهبان، یک نویسنده، و دکمه‌ای که همیشه مال من است.</p>
+      <div class="cards stagger">
+        <div class="card">
+          <span class="cnum">A</span>
+          <h3>Watches quietly</h3>
+          <p>Only one-to-one chats from the friends list. Groups, likes, follows and strangers never get a draft. Several messages in a row become one thought.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">B</span>
+          <h3>Writes in my voice</h3>
+          <p>The prompt carries my persona, notes on each person, and the rules it learned from the drafts I edited or threw away.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">C</span>
+          <h3>Knows when not to write</h3>
+          <p>Some messages deserve one emoji, some deserve nothing, and some are for me alone. ASR flags those instead of inventing an answer.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">D</span>
+          <h3>Seven small agents</h3>
+          <p>A watcher, an Instagram fallback, the brain, a researcher, a profiler, an improver and a doctor. Each one has a single job and a visible log.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">E</span>
+          <h3>Voice, when typing is wrong</h3>
+          <p>A wake word and a speaking assistant that can open apps and tap through a few steps — never on banking, passwords or settings.</p>
+        </div>
+        <div class="card">
+          <span class="cnum">F</span>
+          <h3>A memory that stays put</h3>
+          <p>Approved and rejected drafts become examples. Exported chats become an archive it can search before answering.</p>
+        </div>
+      </div>
+
+      <div class="roster-wrap">
+        <p class="roster-head"><span>Seven agents, one reply</span><span>One job each · every step logged</span></p>
+        <ol class="roster stagger" aria-label="The seven agents">
+          <li><span class="rnum">01</span><b>Watcher</b><em>reads the notification feed</em></li>
+          <li><span class="rnum">02</span><b>Instagram</b><em>covers the DMs</em></li>
+          <li><span class="rnum">03</span><b>Brain</b><em>writes the draft</em></li>
+          <li><span class="rnum">04</span><b>Researcher</b><em>pulls the context</em></li>
+          <li><span class="rnum">05</span><b>Profiler</b><em>keeps notes on people</em></li>
+          <li><span class="rnum">06</span><b>Improver</b><em>turns edits into rules</em></li>
+          <li><span class="rnum">07</span><b>Doctor</b><em>checks its own health</em></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="screens" aria-labelledby="screens-title">
+    <div class="wrap">
+      <p class="label"><span>03</span>On the phone</p>
+      <h2 id="screens-title" class="band-title">Three screens: what it saw, <em>what it wrote, what I approve.</em></h2>
+
+      <div class="phones">
+        <figure class="phone-fig">
+          <div class="phone" aria-hidden="true">
+            <div class="phone-screen">
+              <div class="p-status"><span>۹:۴۱</span><span class="p-sig">▮▮▮</span></div>
+              <div class="p-head"><b>ASR</b><span class="p-mic">◉</span></div>
+              <div class="p-hero">
+                <div class="p-orb"></div>
+                <div class="p-hero-t">روشن و آماده</div>
+                <div class="p-hero-s">من گوش می‌دِم؛ هر کاری داری بگو</div>
+              </div>
+              <div class="p-stats">
+                <div><b>۱۴</b><span>پیش‌نویس امروز</span></div>
+                <div><b>۲</b><span>در انتظار تأیید</span></div>
+              </div>
+              <div class="p-list">
+                <div class="p-row"><span>دسترسی به اعلان‌ها</span><i>✓</i></div>
+                <div class="p-row"><span>کلید Claude</span><i>✓</i></div>
+                <div class="p-row"><span>باتری بدون محدودیت</span><i class="warn">•</i></div>
+              </div>
+              <div class="p-sec"><span>ایجنت‌ها</span><b>۷ فعال</b></div>
+              <div class="p-agents">
+                <span>نگهبان</span><span>اینستاگرام</span><span>مغز</span><span>پیک</span><span class="warn">عیب‌یاب</span>
+              </div>
+              <div class="p-last"><span class="av" style="--av:rgba(198,255,46,.18)">ز</span><div><b>آخرین پیش‌نویس</b><p>برای مامان · ری‌اکشن ❤️</p></div></div>
+              <div class="p-sec"><span>امروز</span><b>۱۴ پیش‌نویس</b></div>
+              <div class="p-msgs">
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.09)">س</span><div><b>سارا</b><p>بلیط‌ها رو گرفتی؟</p></div><i class="badge hold">با خودت</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.13)">ح</span><div><b>حسام</b><p>شیفت فردا چیه؟</p></div><i class="badge">آماده</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(198,255,46,.18)">ز</span><div><b>مامان</b><p>ویدیو رو دیدی؟</p></div><i class="badge react">❤️</i></div>
+              </div>
+              <div class="p-tabs">
+                <span class="p-tab on"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.5 7.5 8 3l5.5 4.5V13h-4V9.5h-3V13h-4z"/></svg>خانه</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.5 4h11v7h-3.4L8 13l-2.1-2H2.5z"/></svg>پیام‌ها</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m4 8.2 2.6 2.6L12 5"/></svg>تأیید</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="6" r="2.4"/><path d="M3.5 13c.6-2.2 2.4-3.4 4.5-3.4s3.9 1.2 4.5 3.4"/></svg>دوستان</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 5h10M5 8h6M7 11h2"/></svg>تنظیمات</span>
+              </div>
+            </div>
+          </div>
+          <figcaption class="p-caption"><b>Home</b><span class="fa-word">خانه</span></figcaption>
+        </figure>
+
+        <figure class="phone-fig">
+          <div class="phone" aria-hidden="true">
+            <div class="phone-screen">
+              <div class="p-status"><span>۹:۴۱</span><span class="p-sig">▮▮▮</span></div>
+              <div class="p-head"><b>پیام‌ها</b><span class="p-pill">۴</span></div>
+              <div class="p-chips"><span class="on">همه</span><span>واتساپ</span><span>تلگرام</span><span>اینستاگرام</span></div>
+              <div class="p-msgs">
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.09)">س</span><div><b>سارا</b><p>سلام، بلیط‌ها رو گرفتی؟</p></div><i class="badge hold">با خودت</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.13)">ن</span><div><b>حسام</b><p>دمت گرم داداش، شیفت فردا چیه؟</p></div><i class="badge">جواب آماده</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(198,255,46,.18)">ز</span><div><b>مامان</b><p>ویدیو رو دیدی؟</p></div><i class="badge react">❤️ ری‌اکشن</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.07)">A</span><div><b>Ali</b><p>داش حسین، یه تماس بگیر</p></div><i class="badge hold">با خودت</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.11)">ت</span><div><b>Timi</b><p>Good morning abrome, shift today?</p></div><i class="badge react">ری‌اکشن</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.09)">س</span><div><b>سونیا</b><p>عشقولی کجایی؟</p></div><i class="badge">جواب آماده</i></div>
+                <div class="p-msg"><span class="av" style="--av:rgba(255,255,255,.07)">؟</span><div><b>غریبه</b><p>سلام، شما آقای … هستید؟</p></div><i class="badge hold">نادیده</i></div>
+              </div>
+              <div class="p-last"><span class="av" style="--av:rgba(198,255,46,.22)">گ</span><div><b>گروه‌های واتساپ</b><p>خلاصهٔ امروز آماده است</p></div></div>
+              <div class="p-tabs">
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.5 7.5 8 3l5.5 4.5V13h-4V9.5h-3V13h-4z"/></svg>خانه</span>
+                <span class="p-tab on"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.5 4h11v7h-3.4L8 13l-2.1-2H2.5z"/></svg>پیام‌ها</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m4 8.2 2.6 2.6L12 5"/></svg>تأیید</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="6" r="2.4"/><path d="M3.5 13c.6-2.2 2.4-3.4 4.5-3.4s3.9 1.2 4.5 3.4"/></svg>دوستان</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 5h10M5 8h6M7 11h2"/></svg>تنظیمات</span>
+              </div>
+            </div>
+          </div>
+          <figcaption class="p-caption"><b>Messages</b><span class="fa-word">پیام‌ها</span></figcaption>
+        </figure>
+
+        <figure class="phone-fig is-gate">
+          <div class="phone" aria-hidden="true">
+            <div class="phone-screen">
+              <div class="p-status"><span>۹:۴۱</span><span class="p-sig">▮▮▮</span></div>
+              <div class="p-head"><b>تأیید جواب‌ها</b><span class="p-pill">۲</span></div>
+              <div class="p-card p-card-hero">
+                <div class="p-to"><span class="av" style="--av:rgba(255,255,255,.13)">ح</span><div><b>برای حسام</b><span>واتساپ · همین حالا</span></div></div>
+                <p class="p-bubble">دمت گرم داداش، شیفت من شب است، فردا همون ساعت می‌بینمت 👌</p>
+                <div class="p-actions"><span class="p-btn">بفرست</span><span class="p-btn ghost">ویرایش</span></div>
+                <span class="p-skip">ولش کن</span>
+                <p class="p-note">از هر تأیید و رد، یاد می‌گیرم.</p>
+              </div>
+              <div class="p-sec"><span>یادگرفته‌ام</span><b>۲ قاعده</b></div>
+              <div class="p-rule"><b>برای حسام</b><p>جواب کاری را کوتاه بنویس و هیچ‌وقت شیفت را از طرف او تأیید نکن.</p></div>
+              <div class="p-sec"><span>در انتظار</span><b>۱ مورد</b></div>
+              <div class="p-card">
+                <div class="p-to"><span class="av" style="--av:rgba(255,255,255,.09)">س</span><div><b>برای سارا</b><span>واتساپ · ۱۲ دقیقه پیش</span></div></div>
+                <p class="p-bubble">سلام خواهر جون، بلیط‌ها رو گرفتم، شب برات می‌فرستم.</p>
+                <div class="p-actions"><span class="p-btn">بفرست</span><span class="p-btn ghost">ویرایش</span></div>
+              </div>
+              <div class="p-tabs">
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.5 7.5 8 3l5.5 4.5V13h-4V9.5h-3V13h-4z"/></svg>خانه</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.5 4h11v7h-3.4L8 13l-2.1-2H2.5z"/></svg>پیام‌ها</span>
+                <span class="p-tab on"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="m4 8.2 2.6 2.6L12 5"/></svg>تأیید</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="8" cy="6" r="2.4"/><path d="M3.5 13c.6-2.2 2.4-3.4 4.5-3.4s3.9 1.2 4.5 3.4"/></svg>دوستان</span>
+                <span class="p-tab"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 5h10M5 8h6M7 11h2"/></svg>تنظیمات</span>
+              </div>
+            </div>
+          </div>
+          <figcaption class="p-caption"><b>Approve</b><span class="fa-word">تأیید</span></figcaption>
+        </figure>
+      </div>
+      <div class="phones-nav" role="group" aria-label="Choose a screen">
+        <button type="button" class="on" data-screen="0" aria-label="Show the Home screen">01</button>
+        <button type="button" data-screen="1" aria-label="Show the Messages screen">02</button>
+        <button type="button" data-screen="2" aria-label="Show the Approve screen">03</button>
+        <span class="phones-hint" aria-hidden="true">Swipe →</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <p class="label"><span>04</span>How it works</p>
+      <h2 id="how-title" class="band-title">A draft is a proposal, <em>never a send.</em></h2>
+      <ol class="flow stagger">
+        <li class="step">
+          <h3>A message lands</h3>
+          <p>WhatsApp, Telegram or Instagram posts a notification. ASR keeps the text, the sender and the chat, and ignores the noise.</p>
+        </li>
+        <li class="step">
+          <h3>It drafts</h3>
+          <p>The brain reads that person's notes, the recent thread and the rules it has learned, then writes a reply — or decides a reaction is enough.</p>
+        </li>
+        <li class="step is-gate">
+          <h3>I approve</h3>
+          <p>Send, edit or drop it. The draft waits in a notification and on the Approve page until I choose.</p>
+        </li>
+        <li class="step">
+          <h3>The chat app sends</h3>
+          <p>The approved text goes back through the messaging app's own reply action. ASR never holds my account password.</p>
+        </li>
+      </ol>
+      <div class="callout">
+        <p><strong>One rule everywhere:</strong> anything that cannot be taken back — sending, calling, deleting — waits for an explicit yes.</p>
+        <div class="big">1<small>approval gate</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band statement" aria-labelledby="rule-title">
+    <div class="wrap">
+      <p class="statement-kicker"><i aria-hidden="true"></i>The one rule</p>
+      <h2 id="rule-title" class="statement-line">It proposes. <em>I approve.</em> That order never flips.</h2>
+    </div>
+  </section>
+
+  <section class="band band-tight" aria-label="Numbers">
+    <div class="wrap">
+      <dl class="stats-band">
+        <div><dt>Agents behind one reply</dt><dd>07</dd></div>
+        <div><dt>Builds shipped to my phone</dt><dd>38</dd></div>
+        <div><dt>Servers holding my messages</dt><dd>00</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="band" id="privacy" aria-labelledby="privacy-title">
+    <div class="wrap split">
+      <p class="label"><span>05</span>Privacy</p>
+      <div>
+        <h2 id="privacy-title">The key stays on the phone. <em>The last word stays with me.</em></h2>
+        <div class="prose">
+          <p>The Claude key is typed into the app and encrypted with a key that lives inside the phone's hardware Keystore. It never leaves the device except inside the request itself.</p>
+          <p>There is no backend to breach and no account to create. The contact list, the persona and the learned rules live in the app's own storage, and the notification listener only looks at chats with people I have named.</p>
+          <p class="fa" lang="fa" dir="rtl">کلید API روی گوشی می‌ماند و با کلید سخت‌افزاری Keystore رمز می‌شود. هیچ سروری برای پیام‌ها وجود ندارد؛ فهرست دوستان، لحن و قواعد یادگرفته‌شده همه در حافظهٔ خود اپ هستند.</p>
+        </div>
+        <div class="callout">
+          <p>Every message, draft and rule lives on the device. The only outbound call is the one that asks the model for a reply.</p>
+          <div class="big">0<small>cloud servers</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band fa-band" id="fa" aria-labelledby="fa-title">
+    <div class="wrap">
+      <p class="label"><span>06</span>به فارسی</p>
+      <h2 id="fa-title">دستیاری که قبل از هر کار، <em>اجازه می‌گیرد.</em></h2>
+      <div class="fa-prose">
+        <p>ASR یک دستیار شخصی اندرویدی است که روی گوشی خودم زندگی می‌کند. اعلان‌های واتساپ، تلگرام و اینستاگرام را می‌خواند، بر اساس لحن و قواعدی که از من یاد گرفته جواب پیش‌نویس می‌کند، و تا وقتی خودم «بفرست» را نزنم هیچ چیزی ارسال نمی‌شود.</p>
+        <p>فقط دوست‌هایی که اسمشان در فهرست من است پیش‌نویس می‌گیرند؛ گروه‌ها، غریبه‌ها و لایک و فالو نادیده می‌مانند. کلید API روی گوشی و داخل Keystore سخت‌افزاری رمز می‌شود و هیچ سروری پیام‌ها را نگه نمی‌دارد.</p>
+        <p>نسخهٔ فعلی ساختِ ۳۸ است. همان بیلد از همین صفحه قابل دانلود است؛ نصبش دستی است و اپ فقط با کلید Claude خودت کار می‌کند.</p>
+      </div>
+      <ul class="tags" aria-label="Stack">
+        <li>Android</li><li>Java</li><li>Notification listener</li><li>Claude API</li><li>No backend</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" id="status" aria-labelledby="status-title">
+    <div class="wrap split">
+      <p class="label"><span>07</span>Where it is</p>
+      <div>
+        <h2 id="status-title">Early, private, <em>and in my pocket.</em></h2>
+        <div class="prose">
+          <p>ASR is a personal build that changes every week and was made for one person. The APK below is that build, shared as-is: there is no store listing, and the notification and accessibility access it asks for would not pass a store review yet.</p>
+          <div class="dl">
+            <a class="btn" href="downloads/ASR-37.apk" download="ASR-37.apk">Download the APK <span aria-hidden="true">↓</span></a>
+            <span class="dl-meta">v37.0 · Android 10+ · 1.6 MB</span>
+          </div>
+          <p class="muted-note">Sideload it and add your own Claude key. There is no account, no backend, and no copy of my data inside the package.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band cta" aria-labelledby="cta-title">
+    <div class="wrap">
+      <h2 id="cta-title">Building an assistant that has to ask first? <em>Let's compare notes.</em></h2>
+      <p>Approval flows, what to log, and where the guardrails belong — I am happy to talk about any of it.</p>
+      <div class="cta-row">
+        <a class="btn" href="mailto:mosalanejadamirhossein@gmail.com?subject=ASR">Email me about ASR <span aria-hidden="true">↗</span></a>
+        <a class="btn-ghost" href="index.html#work">Back to selected work</a>
+      </div>
+    </div>
+  </section>
+
+  <a class="next wrap" href="replymate.html" aria-label="Next: ReplyMate">
+    <span>
+      <span class="nlabel">Case — 01</span>
+      <span class="ntitle">ReplyMate</span>
+    </span>
+    <span class="narr" aria-hidden="true">↗</span>
+  </a>
+
+  <footer class="footer wrap">
+    <span>© 2026 Amirhossein Mosallanejad</span>
+    <span>Yerevan, Armenia</span>
+    <span class="lime">Own build</span>
+    <a href="index.html">Back to index <span aria-hidden="true">↑</span></a>
+  </footer>
+
+</main>
+<script>
+(function(){
+  if (!("IntersectionObserver" in window)) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  /* kinetic wordmark */
+  var hero = document.querySelector(".hero-title");
+  if (hero && hero.firstChild && hero.firstChild.nodeType === 3) {
+    var letters = hero.firstChild.nodeValue.trim();
+    if (letters) {
+      var word = document.createElement("span");
+      word.className = "hero-word";
+      letters.split("").forEach(function(ch, i){
+        var letter = document.createElement("span");
+        letter.className = "hl";
+        letter.textContent = ch;
+        letter.style.setProperty("--i", i);
+        word.appendChild(letter);
+      });
+      hero.replaceChild(word, hero.firstChild);
+      hero.classList.add("hero-split");
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){ hero.classList.add("hero-in"); });
+      });
+    }
+  }
+
+  var els = Array.prototype.slice.call(document.querySelectorAll(
+    ".band .wrap > *:not(.phones-nav), .next, .footer"
+  ));
+  els.forEach(function(el){
+    var sibs = el.parentNode.children;
+    var i = Array.prototype.indexOf.call(sibs, el);
+    el.style.transitionDelay = Math.min(i, 5) * 70 + "ms";
+    el.classList.add("rv");
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      io.unobserve(el);
+      el.classList.add("rv-in");
+      setTimeout(function(){
+        el.classList.remove("rv", "rv-in");
+        el.style.transitionDelay = "";
+      }, 950);
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* odometer stats */
+  var stats = Array.prototype.slice.call(document.querySelectorAll(".stats-band dd"));
+  if (stats.length && "IntersectionObserver" in window && !reduce) {
+    stats.forEach(function(dd){
+      var raw = dd.textContent.trim();
+      if (!/^\d+$/.test(raw)) return;
+      dd.textContent = "";
+      var sr = document.createElement("span");
+      sr.className = "sr-only";
+      sr.textContent = raw;
+      var reel = document.createElement("span");
+      reel.className = "reel";
+      reel.setAttribute("aria-hidden", "true");
+      raw.split("").forEach(function(ch, i){
+        var col = document.createElement("span");
+        col.className = "col";
+        var strip = document.createElement("span");
+        strip.className = "strip";
+        strip.style.setProperty("--i", i);
+        strip.dataset.target = ch;
+        for (var n = 0; n <= 10; n++) {
+          var digit = document.createElement("span");
+          digit.textContent = n === 10 ? 0 : n;
+          strip.appendChild(digit);
+        }
+        col.appendChild(strip);
+        reel.appendChild(col);
+      });
+      dd.appendChild(sr);
+      dd.appendChild(reel);
+    });
+
+    var sio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        sio.unobserve(e.target);
+        Array.prototype.forEach.call(e.target.querySelectorAll(".strip"), function(strip){
+          var target = Number(strip.dataset.target);
+          var steps = target === 0 ? 10 : target;
+          strip.style.transform = "translateY(-" + steps + "em)";
+        });
+      });
+    }, { threshold: 0.6 });
+    stats.forEach(function(dd){ sio.observe(dd); });
+  }
+
+  /* screen selector under the phone carousel */
+  var strip = document.querySelector(".phones");
+  var nav = document.querySelector(".phones-nav");
+  if (strip && nav) {
+    var figs = Array.prototype.slice.call(strip.querySelectorAll(".phone-fig"));
+    var btns = Array.prototype.slice.call(nav.querySelectorAll("button"));
+    var raf = false;
+
+    function setActive(i){
+      btns.forEach(function(b, j){ b.classList.toggle("on", i === j); });
+      figs.forEach(function(f, j){ f.classList.toggle("is-active", j === i); });
+    }
+    function sync(){
+      var mid = strip.scrollLeft + strip.clientWidth / 2;
+      var best = 0, dist = Infinity;
+      figs.forEach(function(f, i){
+        var c = f.getBoundingClientRect().left - strip.getBoundingClientRect().left + strip.scrollLeft + f.offsetWidth / 2;
+        var d = Math.abs(c - mid);
+        if (d < dist) { dist = d; best = i; }
+      });
+      setActive(best);
+    }
+    strip.addEventListener("scroll", function(){
+      if (raf) return;
+      raf = true;
+      requestAnimationFrame(function(){ raf = false; sync(); });
+    }, { passive: true });
+    btns.forEach(function(b){
+      b.addEventListener("click", function(){
+        var f = figs[Number(b.dataset.screen)];
+        if (!f) return;
+        var left = f.getBoundingClientRect().left - strip.getBoundingClientRect().left + strip.scrollLeft - (strip.clientWidth - f.offsetWidth) / 2;
+        strip.scrollTo({ left: left, behavior: reduce ? "auto" : "smooth" });
+        setActive(Number(b.dataset.screen));
+      });
+    });
+    sync();
+  }
+
+  /* section rail state */
+  var rail = document.querySelector(".rail");
+  if (rail) {
+    var links = Array.prototype.slice.call(rail.querySelectorAll("a"));
+    var secs = links.map(function(a){ return document.getElementById(a.getAttribute("href").slice(1)); });
+    var last = -2, ticking = false;
+
+    function mark(){
+      rail.classList.toggle("is-on", window.scrollY > 240);
+      var y = window.scrollY + window.innerHeight * 0.38;
+      var idx = -1;
+      secs.forEach(function(s, i){ if (s && s.offsetTop <= y) idx = i; });
+      if (idx === last) return;
+      last = idx;
+      links.forEach(function(a, i){
+        var on = i === idx;
+        a.classList.toggle("on", on);
+        if (on) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    }
+    window.addEventListener("scroll", function(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function(){ ticking = false; mark(); });
+    }, { passive: true });
+    mark();
+  }
+})();
+</script>
+<script>
+(function(){
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+
+  /* staggered entrances for grids */
+  if ("IntersectionObserver" in window) {
+    Array.prototype.forEach.call(document.querySelectorAll(".stagger"), function(group){
+      Array.prototype.forEach.call(group.children, function(child, i){
+        child.style.setProperty("--i", i);
+      });
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (!e.isIntersecting) return;
+          io.unobserve(e.target);
+          e.target.classList.add("is-in");
+        });
+      }, { threshold: 0.15, rootMargin: "0px 0px -4% 0px" });
+      io.observe(group);
+    });
+
+    /* statement emphasis */
+    var statement = document.querySelector(".statement");
+    if (statement) {
+      statement.classList.add("anim");
+      var sio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (!e.isIntersecting) return;
+          sio.unobserve(e.target);
+          e.target.classList.add("is-in");
+        });
+      }, { threshold: 0.35 });
+      sio.observe(statement);
+
+      /* split the line into words so they can light up on scroll */
+      var line = statement.querySelector(".statement-line");
+      if (line) {
+        var words = [];
+        function splitWords(node){
+          if (node.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            node.nodeValue.split(/(\s+)/).forEach(function(part){
+              if (!part) return;
+              if (/^\s+$/.test(part)) {
+                frag.appendChild(document.createTextNode(part));
+                return;
+              }
+              var word = document.createElement("span");
+              word.className = "sw";
+              word.textContent = part;
+              word.style.setProperty("--i", words.length);
+              words.push(word);
+              frag.appendChild(word);
+            });
+            node.parentNode.replaceChild(frag, node);
+          } else if (node.nodeType === 1) {
+            Array.prototype.slice.call(node.childNodes).forEach(splitWords);
+          }
+        }
+        splitWords(line);
+        line.style.setProperty("--n", words.length);
+        line.classList.add("words");
+
+        function lightLine(){
+          var r = line.getBoundingClientRect();
+          var start = window.innerHeight * 0.95;
+          var end = window.innerHeight * 0.5;
+          var p = (start - r.top) / (start - end);
+          line.style.setProperty("--p", Math.min(Math.max(p, 0), 1).toFixed(3));
+        }
+        var lightTick = false;
+        function queueLight(){
+          if (lightTick) return;
+          lightTick = true;
+          requestAnimationFrame(function(){ lightTick = false; lightLine(); });
+        }
+        window.addEventListener("scroll", queueLight, { passive: true });
+        window.addEventListener("resize", queueLight, { passive: true });
+        lightLine();
+      }
+    }
+  }
+
+  /* reading progress */
+  var bar = document.querySelector(".progress");
+  if (bar) {
+    var ticking = false;
+    function paint(){
+      ticking = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+      bar.style.transform = "scaleX(" + p.toFixed(4) + ")";
+      bar.classList.toggle("is-on", window.scrollY > 60);
+    }
+    function queue(){
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(paint);
+    }
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue, { passive: true });
+    paint();
+  }
+
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+  /* cursor spotlight inside the feature cards */
+  Array.prototype.forEach.call(document.querySelectorAll(".card"), function(card){
+    var raf = false, mx = 0, my = 0;
+    card.addEventListener("pointermove", function(e){
+      var r = card.getBoundingClientRect();
+      mx = e.clientX - r.left;
+      my = e.clientY - r.top;
+      if (raf) return;
+      raf = true;
+      requestAnimationFrame(function(){
+        raf = false;
+        card.style.setProperty("--mx", mx + "px");
+        card.style.setProperty("--my", my + "px");
+      });
+    });
+  });
+
+  /* gentle tilt + moving glare on the phone mockups */
+  Array.prototype.forEach.call(document.querySelectorAll(".phone-fig"), function(fig){
+    var raf = false, rx = 0, ry = 0, gx = 50, gy = 40;
+    fig.addEventListener("pointermove", function(e){
+      var r = fig.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      rx = (-py * 5).toFixed(2);
+      ry = (px * 6).toFixed(2);
+      gx = ((px + 0.5) * 100).toFixed(1);
+      gy = ((py + 0.5) * 100).toFixed(1);
+      fig.classList.add("is-tilting");
+      if (raf) return;
+      raf = true;
+      requestAnimationFrame(function(){
+        raf = false;
+        if (!fig.classList.contains("is-tilting")) return;
+        fig.style.setProperty("--rx", rx + "deg");
+        fig.style.setProperty("--ry", ry + "deg");
+        fig.style.setProperty("--gx", gx + "%");
+        fig.style.setProperty("--gy", gy + "%");
+      });
+    });
+    fig.addEventListener("pointerleave", function(){
+      fig.classList.remove("is-tilting");
+      fig.style.setProperty("--rx", "0deg");
+      fig.style.setProperty("--ry", "0deg");
+    });
+  });
+
+  /* the mockups drift at slightly different speeds while scrolling */
+  var figList = Array.prototype.slice.call(document.querySelectorAll(".phones .phone-fig"));
+  if (figList.length && window.innerWidth > 860) {
+    var pTick = false;
+    function drift(){
+      pTick = false;
+      var box = document.querySelector(".phones").getBoundingClientRect();
+      var p = (window.innerHeight - box.top) / (window.innerHeight + box.height);
+      p = Math.min(Math.max(p, 0), 1);
+      figList.forEach(function(fig, i){
+        var offset = (i - 1) * 24 * (p - 0.5);
+        fig.style.setProperty("--py", offset.toFixed(1) + "px");
+      });
+    }
+    function queueDrift(){
+      if (pTick) return;
+      pTick = true;
+      requestAnimationFrame(drift);
+    }
+    window.addEventListener("scroll", queueDrift, { passive: true });
+    window.addEventListener("resize", queueDrift, { passive: true });
+    drift();
+  }
+})();
+</script>
+</body>
+</html>
