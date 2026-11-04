@@ -79,7 +79,7 @@
       <nav class="crumbs" aria-label="Breadcrumb">
         <a href="index.html">Index</a><span aria-hidden="true">/</span>
         <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
-        <b>Build 43</b>
+        <b>Build 44</b>
       </nav>
       <p class="kicker"><i aria-hidden="true"></i>Early build — pocket assistant</p>
       <h1 id="case-title" class="hero-title">ASR<span class="hero-orb" aria-hidden="true"></span></h1>
@@ -89,7 +89,7 @@
         <li><span>Role</span><b>Design &amp; build</b></li>
         <li><span>Scope</span><b>Personal app</b></li>
         <li><span>Platform</span><b>Android, sideloaded</b></li>
-        <li><span>Status</span><b>Build 43, early</b></li>
+        <li><span>Status</span><b>Build 44, early</b></li>
       </ul>
     </div>
   </section>
@@ -330,9 +330,9 @@
       <div>
         <h2 id="privacy-title">The key stays on the phone. <em>The last word stays with me.</em></h2>
         <div class="prose">
-          <p>The reply is written by a Qwen2.5 3B model that runs inside the app on the phone's own chip. The message becomes a prompt, the prompt is answered locally, and nothing is sent anywhere to think. A Gemini key — optional, for photos and as a backup — is encrypted with a key that lives in the hardware Keystore.</p>
+          <p>The reply is written by a Qwen2.5 model that runs inside the app on the phone's own chip — 3B, or the lighter 1.5B on phones with less memory. The message becomes a prompt, the prompt is answered locally, and nothing is sent anywhere to think. A Gemini key — optional, for photos and as a backup — is encrypted with a key that lives in the hardware Keystore.</p>
           <p>There is no backend to breach and no account to create. The contact list, the persona and the learned rules live in the app's own storage, and the notification listener only looks at chats with people I have named.</p>
-          <p class="fa" lang="fa" dir="rtl">جواب را مدل Qwen2.5 3B می‌نویسد که روی خود گوشی و داخل اپ اجرا می‌شود؛ برای فکر کردن هیچ چیزی از گوشی بیرون نمی‌رود. کلید Gemini (اختیاری، برای عکس‌ها و پشتیبان) با کلید سخت‌افزاری Keystore رمز می‌شود. فهرست دوستان، لحن و قواعد یادگرفته‌شده همه در حافظهٔ خود اپ هستند.</p>
+          <p class="fa" lang="fa" dir="rtl">جواب را مدل Qwen2.5 می‌نویسد که روی خود گوشی و داخل اپ اجرا می‌شود (۳B، یا نسخهٔ سبک ۱.۵B روی گوشی‌های کم‌رم)؛ برای فکر کردن هیچ چیزی از گوشی بیرون نمی‌رود. کلید Gemini (اختیاری، برای عکس‌ها و پشتیبان) با کلید سخت‌افزاری Keystore رمز می‌شود. فهرست دوستان، لحن و قواعد یادگرفته‌شده همه در حافظهٔ خود اپ هستند.</p>
         </div>
         <div class="callout">
           <p>Every message, draft and rule lives on the device. The model that writes the reply lives there too.</p>
@@ -352,7 +352,7 @@
         <p>نسخهٔ فعلی ساختِ ۴۳ است و همان زبان ظاهری این صفحه را دارد: سرمه‌ای شب، لیمویی، وزیرمتن. همان بیلد از همین صفحه قابل دانلود است؛ نصبش دستی است. بار اول اپ مدل ۱.۸ گیگی را (با وای‌فای) دانلود می‌کند و بعدش بدون اینترنت هم جواب می‌نویسد.</p>
       </div>
       <ul class="tags" aria-label="Stack">
-        <li>Android</li><li>Java</li><li>Notification listener</li><li>llama.cpp</li><li>Qwen2.5 3B on-device</li><li>No backend</li>
+        <li>Android</li><li>Java</li><li>Notification listener</li><li>llama.cpp</li><li>Qwen2.5 on-device</li><li>No backend</li>
       </ul>
     </div>
   </section>
@@ -364,10 +364,10 @@
         <h2 id="status-title">Early, private, <em>and in my pocket.</em></h2>
         <div class="prose">
           <p>ASR is a personal build that changes every week and was made for one person. The APK below is that build, shared as-is: there is no store listing, and the notification and accessibility access it asks for would not pass a store review yet.</p>
-          <p>This build now thinks on the phone: a Qwen2.5 3B model runs inside the app, downloaded once over Wi-Fi, so replies no longer need a cloud key. It also wears the same design as this page — night navy, a lime thread, Vazirmatn, hairline cards.</p>
+          <p>This build now thinks on the phone: a Qwen2.5 model runs inside the app, downloaded once over Wi-Fi, so replies no longer need a cloud key. It picks the 1.5B model on phones with less memory and the 3B on bigger ones, and remembers where a download stopped so a dropped connection no longer means starting over. It also wears the same design as this page — night navy, a lime thread, Vazirmatn, hairline cards.</p>
           <div class="dl">
-            <a class="btn" href="downloads/ASR-43.apk" download="ASR-43.apk">Download the APK <span aria-hidden="true">↓</span></a>
-            <span class="dl-meta">v43.0 · Android 10+ · 4.4 MB + 1.8 GB model</span>
+            <a class="btn" href="downloads/ASR-44.apk" download="ASR-44.apk">Download the APK <span aria-hidden="true">↓</span></a>
+            <span class="dl-meta">v44.0 · Android 10+ · 4.4 MB + 0.9–1.8 GB model</span>
           </div>
           <p class="muted-note">Sideload it and download the model once. No account, no backend, and no copy of my data inside the package.</p>
         </div>
