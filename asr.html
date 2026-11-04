@@ -79,7 +79,7 @@
       <nav class="crumbs" aria-label="Breadcrumb">
         <a href="index.html">Index</a><span aria-hidden="true">/</span>
         <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
-        <b>Build 47</b>
+        <b>Build 48</b>
       </nav>
       <p class="kicker"><i aria-hidden="true"></i>Early build — pocket assistant</p>
       <h1 id="case-title" class="hero-title">ASR<span class="hero-orb" aria-hidden="true"></span></h1>
@@ -89,7 +89,7 @@
         <li><span>Role</span><b>Design &amp; build</b></li>
         <li><span>Scope</span><b>Personal app</b></li>
         <li><span>Platform</span><b>Android, sideloaded</b></li>
-        <li><span>Status</span><b>Build 47, early</b></li>
+        <li><span>Status</span><b>Build 48, early</b></li>
       </ul>
     </div>
   </section>
@@ -349,8 +349,8 @@
       <div class="fa-prose">
         <p>ASR یک دستیار شخصی اندرویدی است که روی گوشی خودم زندگی می‌کند. اعلان‌های واتساپ، تلگرام و اینستاگرام را می‌خواند، بر اساس لحن و قواعدی که از من یاد گرفته جواب پیش‌نویس می‌کند، و تا وقتی خودم «بفرست» را نزنم هیچ چیزی ارسال نمی‌شود.</p>
         <p>فقط دوست‌هایی که اسمشان در فهرست من است پیش‌نویس می‌گیرند؛ گروه‌ها، غریبه‌ها و لایک و فالو نادیده می‌مانند. جواب را مدل Qwen2.5 روی خود گوشی می‌نویسد و هیچ سروری پیام‌ها را نه می‌بیند نه نگه می‌دارد.</p>
-        <p>نسخهٔ فعلی ساختِ ۴۷ است و همان زبان ظاهری این صفحه را دارد: سرمه‌ای شب، لیمویی، وزیرمتن. همان بیلد از همین صفحه قابل دانلود است؛ نصبش دستی است. بار اول اپ مدل را (بین ۰.۴ تا ۱.۸ گیگ، با وای‌فای) دانلود می‌کند و بعدش بدون اینترنت هم جواب می‌نویسد.</p>
-        <p>دستیار صوتی با هر مدلی که روی گوشی نصب است جواب می‌دهد و خط مدل بالای همان صفحه حالا انتخاب‌گر است: با یک ضربه بین مدل‌های نصب‌شده یا حالت خودکار جابه‌جا می‌شوی. می‌شود از خودش خواست یک ایجنت تکرارشونده بسازد («هر روز ساعت ۹ بگو دیشب چی از دستم رفت») که فقط گزارش می‌دهد و هیچ‌وقت چیزی نمی‌فرستد، متنی را چسباند تا بلند بخواند، یا به‌جای حرف زدن بنویسد — نوار نوشتن حالا بالای کیبورد می‌ماند و اعلان پس‌زمینه هم یک خط کوچک و بی‌صداست.</p>
+        <p>نسخهٔ فعلی ساختِ ۴۸ است و همان زبان ظاهری این صفحه را دارد: سرمه‌ای شب، لیمویی، وزیرمتن. همان بیلد از همین صفحه قابل دانلود است؛ نصبش دستی است. بار اول اپ مدل را (بین ۰.۴ تا ۱.۸ گیگ، با وای‌فای) دانلود می‌کند و بعدش بدون اینترنت هم جواب می‌نویسد.</p>
+        <p>دستیار صوتی با هر مدلی که روی گوشی نصب است جواب می‌دهد و مدلش حالا در نوار بالای صفحه است: با یک ضربه بین مدل‌های نصب‌شده یا حالت خودکار جابه‌جا می‌شوی. مدل سنگین‌تر دیگر اپ را نمی‌بندد: اپ اول رم آزاد را می‌سنجد، مدل را در پروسهٔ جدا باز می‌کند و اگر مدلی باز نشود خودش به سبک‌ترین مدل نصب‌شده برمی‌گردد و همان را می‌گوید. می‌شود از خودش خواست یک ایجنت تکرارشونده بسازد («هر روز ساعت ۹ بگو دیشب چی از دستم رفت») که فقط گزارش می‌دهد و هیچ‌وقت چیزی نمی‌فرستد، متنی را چسباند تا بلند بخواند، یا به‌جای حرف زدن بنویسد — نوار نوشتن بالای کیبورد می‌ماند و اعلان پس‌زمینه هم یک خط کوچک و بی‌صداست.</p>
       </div>
       <ul class="tags" aria-label="Stack">
         <li>Android</li><li>Java</li><li>Notification listener</li><li>llama.cpp</li><li>Qwen2.5 on-device</li><li>No backend</li>
@@ -366,10 +366,10 @@
         <div class="prose">
           <p>ASR is a personal build that changes every week and was made for one person. The APK below is that build, shared as-is: there is no store listing, and the notification and accessibility access it asks for would not pass a store review yet.</p>
           <p>This build now thinks on the phone: a Qwen2.5 model runs inside the app, downloaded once over Wi-Fi, so replies no longer need a cloud key. It picks the 0.5B or 1.5B model on phones with less memory and the 3B on bigger ones, remembers where a download stopped so a dropped connection no longer means starting over, and runs the model in its own process so a model failure never closes the app. It also wears the same design as this page — night navy, a lime thread, Vazirmatn, hairline cards.</p>
-          <p>The voice assistant answers with whatever model is already on the phone, and the model line on that screen is now a picker: tap it to switch between the installed models or back to automatic. You can ask it to make its own recurring agent (“every morning at 9, tell me what I missed”), which only reports and never sends anything, paste a text and have it read aloud, or type instead of talking — the typing bar now stays above the keyboard, and the background notification is a single quiet line.</p>
+          <p>The voice assistant answers with whatever model is already on the phone, and the model now lives in the top bar: tap the chip to switch between the installed models or back to automatic. A heavier model can no longer take the app down — free memory is checked before the model is opened, the model still runs in its own process, and if one fails to open the assistant falls back to the lightest model already installed and says so. You can ask it to make its own recurring agent (“every morning at 9, tell me what I missed”), which only reports and never sends anything, paste a text and have it read aloud, or type instead of talking — the typing bar stays above the keyboard, and the background notification is a single quiet line.</p>
           <div class="dl">
-            <a class="btn" href="downloads/ASR-47.apk" download="ASR-47.apk">Download the APK <span aria-hidden="true">↓</span></a>
-            <span class="dl-meta">v47.0 · Android 10+ · 4.4 MB + 0.4–1.8 GB model</span>
+            <a class="btn" href="downloads/ASR-48.apk" download="ASR-48.apk">Download the APK <span aria-hidden="true">↓</span></a>
+            <span class="dl-meta">v48.0 · Android 10+ · 4.4 MB + 0.4–1.8 GB model</span>
           </div>
           <p class="muted-note">Sideload it and download the model once. No account, no backend, and no copy of my data inside the package.</p>
         </div>
