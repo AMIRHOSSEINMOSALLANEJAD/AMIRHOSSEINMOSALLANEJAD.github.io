@@ -79,7 +79,7 @@
       <nav class="crumbs" aria-label="Breadcrumb">
         <a href="index.html">Index</a><span aria-hidden="true">/</span>
         <a href="index.html#work">Selected work</a><span aria-hidden="true">/</span>
-        <b>Build 40</b>
+        <b>Build 41</b>
       </nav>
       <p class="kicker"><i aria-hidden="true"></i>Early build — pocket assistant</p>
       <h1 id="case-title" class="hero-title">ASR<span class="hero-orb" aria-hidden="true"></span></h1>
@@ -89,7 +89,7 @@
         <li><span>Role</span><b>Design &amp; build</b></li>
         <li><span>Scope</span><b>Personal app</b></li>
         <li><span>Platform</span><b>Android, sideloaded</b></li>
-        <li><span>Status</span><b>Build 40, early</b></li>
+        <li><span>Status</span><b>Build 41, early</b></li>
       </ul>
     </div>
   </section>
@@ -183,7 +183,7 @@
               </div>
               <div class="p-list">
                 <div class="p-row"><span>دسترسی به اعلان‌ها</span><i>✓</i></div>
-                <div class="p-row"><span>کلید Claude</span><i>✓</i></div>
+                <div class="p-row"><span>هوش روی گوشی</span><i>✓</i></div>
                 <div class="p-row"><span>باتری بدون محدودیت</span><i class="warn">•</i></div>
               </div>
               <div class="p-sec"><span>ایجنت‌ها</span><b>۷ فعال</b></div>
@@ -318,7 +318,7 @@
     <div class="wrap">
       <dl class="stats-band">
         <div><dt>Agents behind one reply</dt><dd>07</dd></div>
-        <div><dt>Builds shipped to my phone</dt><dd>38</dd></div>
+        <div><dt>Builds shipped to my phone</dt><dd>41</dd></div>
         <div><dt>Servers holding my messages</dt><dd>00</dd></div>
       </dl>
     </div>
@@ -330,12 +330,12 @@
       <div>
         <h2 id="privacy-title">The key stays on the phone. <em>The last word stays with me.</em></h2>
         <div class="prose">
-          <p>The Claude key is typed into the app and encrypted with a key that lives inside the phone's hardware Keystore. It never leaves the device except inside the request itself.</p>
+          <p>The reply is written by a Qwen2.5 3B model that runs inside the app on the phone's own chip. The message becomes a prompt, the prompt is answered locally, and nothing is sent anywhere to think. A Gemini key — optional, for photos and as a backup — is encrypted with a key that lives in the hardware Keystore.</p>
           <p>There is no backend to breach and no account to create. The contact list, the persona and the learned rules live in the app's own storage, and the notification listener only looks at chats with people I have named.</p>
-          <p class="fa" lang="fa" dir="rtl">کلید API روی گوشی می‌ماند و با کلید سخت‌افزاری Keystore رمز می‌شود. هیچ سروری برای پیام‌ها وجود ندارد؛ فهرست دوستان، لحن و قواعد یادگرفته‌شده همه در حافظهٔ خود اپ هستند.</p>
+          <p class="fa" lang="fa" dir="rtl">جواب را مدل Qwen2.5 3B می‌نویسد که روی خود گوشی و داخل اپ اجرا می‌شود؛ برای فکر کردن هیچ چیزی از گوشی بیرون نمی‌رود. کلید Gemini (اختیاری، برای عکس‌ها و پشتیبان) با کلید سخت‌افزاری Keystore رمز می‌شود. فهرست دوستان، لحن و قواعد یادگرفته‌شده همه در حافظهٔ خود اپ هستند.</p>
         </div>
         <div class="callout">
-          <p>Every message, draft and rule lives on the device. The only outbound call is the one that asks the model for a reply.</p>
+          <p>Every message, draft and rule lives on the device. The model that writes the reply lives there too.</p>
           <div class="big">0<small>cloud servers</small></div>
         </div>
       </div>
@@ -348,11 +348,11 @@
       <h2 id="fa-title">دستیاری که قبل از هر کار، <em>اجازه می‌گیرد.</em></h2>
       <div class="fa-prose">
         <p>ASR یک دستیار شخصی اندرویدی است که روی گوشی خودم زندگی می‌کند. اعلان‌های واتساپ، تلگرام و اینستاگرام را می‌خواند، بر اساس لحن و قواعدی که از من یاد گرفته جواب پیش‌نویس می‌کند، و تا وقتی خودم «بفرست» را نزنم هیچ چیزی ارسال نمی‌شود.</p>
-        <p>فقط دوست‌هایی که اسمشان در فهرست من است پیش‌نویس می‌گیرند؛ گروه‌ها، غریبه‌ها و لایک و فالو نادیده می‌مانند. کلید API روی گوشی و داخل Keystore سخت‌افزاری رمز می‌شود و هیچ سروری پیام‌ها را نگه نمی‌دارد.</p>
-        <p>نسخهٔ فعلی ساختِ ۴۰ است و همان زبان ظاهری این صفحه را دارد: سرمه‌ای شب، لیمویی، وزیرمتن. همان بیلد از همین صفحه قابل دانلود است؛ نصبش دستی است و اپ فقط با کلید Claude خودت کار می‌کند.</p>
+        <p>فقط دوست‌هایی که اسمشان در فهرست من است پیش‌نویس می‌گیرند؛ گروه‌ها، غریبه‌ها و لایک و فالو نادیده می‌مانند. جواب را مدل ۳ میلیاردی Qwen2.5 روی خود گوشی می‌نویسد و هیچ سروری پیام‌ها را نه می‌بیند نه نگه می‌دارد.</p>
+        <p>نسخهٔ فعلی ساختِ ۴۱ است و همان زبان ظاهری این صفحه را دارد: سرمه‌ای شب، لیمویی، وزیرمتن. همان بیلد از همین صفحه قابل دانلود است؛ نصبش دستی است. بار اول اپ مدل ۱.۸ گیگی را (با وای‌فای) دانلود می‌کند و بعدش بدون اینترنت هم جواب می‌نویسد.</p>
       </div>
       <ul class="tags" aria-label="Stack">
-        <li>Android</li><li>Java</li><li>Notification listener</li><li>Claude API</li><li>No backend</li>
+        <li>Android</li><li>Java</li><li>Notification listener</li><li>llama.cpp</li><li>Qwen2.5 3B on-device</li><li>No backend</li>
       </ul>
     </div>
   </section>
@@ -364,12 +364,12 @@
         <h2 id="status-title">Early, private, <em>and in my pocket.</em></h2>
         <div class="prose">
           <p>ASR is a personal build that changes every week and was made for one person. The APK below is that build, shared as-is: there is no store listing, and the notification and accessibility access it asks for would not pass a store review yet.</p>
-          <p>This build now wears the same design as this page — night navy, a lime thread, Vazirmatn, hairline cards — so the screens above are what the app actually looks like.</p>
+          <p>This build now thinks on the phone: a Qwen2.5 3B model runs inside the app, downloaded once over Wi-Fi, so replies no longer need a cloud key. It also wears the same design as this page — night navy, a lime thread, Vazirmatn, hairline cards.</p>
           <div class="dl">
-            <a class="btn" href="downloads/ASR-40.apk" download="ASR-40.apk">Download the APK <span aria-hidden="true">↓</span></a>
-            <span class="dl-meta">v40.0 · Android 10+ · 2.5 MB</span>
+            <a class="btn" href="downloads/ASR-41.apk" download="ASR-41.apk">Download the APK <span aria-hidden="true">↓</span></a>
+            <span class="dl-meta">v41.0 · Android 10+ · 4.4 MB + 1.8 GB model</span>
           </div>
-          <p class="muted-note">Sideload it and add your own Claude key. There is no account, no backend, and no copy of my data inside the package.</p>
+          <p class="muted-note">Sideload it and download the model once. No account, no backend, and no copy of my data inside the package.</p>
         </div>
       </div>
     </div>
